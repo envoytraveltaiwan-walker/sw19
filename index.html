@@ -3,63 +3,115 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SW19 品牌暨產品教育訓練手冊</title>
-    <!-- Tailwind CSS CDN -->
+    <title>SW19 產品教育訓練手冊</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Lucide Icons -->
-    <script src="https://unpkg.com/lucide@latest"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Noto+Sans+TC:wght@300;400;500;700&display=swap');
+
+        *, *::before, *::after {
+            box-sizing: border-box;
+        }
 
         body {
             font-family: 'Plus Jakarta Sans', 'Noto Sans TC', sans-serif;
             background-color: #f7f6f2;
             color: #1e1e1e;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
         }
 
         .font-cinzel {
             font-family: 'Cinzel', serif;
         }
 
-        /* 螢幕簡報播放模式 */
-        @media screen {
-            body {
-                overflow: hidden;
-            }
-            .slide {
-                display: none;
-                opacity: 0;
-                transition: opacity 0.3s ease-in-out;
-                height: calc(100vh - 7rem);
-                overflow-y: auto;
-            }
-            .slide.active {
-                display: flex;
-                opacity: 1;
-            }
+        /* 嚴格 PPT 單頁尺寸：100% 滿版無滾動 */
+        main {
+            flex: 1;
+            height: calc(100vh - 7rem);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .slide {
+            display: none !important;
+            height: 100%;
+            width: 100%;
+            padding: 1.25rem 2.5rem;
+            overflow: hidden;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .slide.active {
+            display: flex !important;
+            flex-direction: column;
+        }
+
+        .slide-inner {
+            max-width: 76rem;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
         }
 
         /* 標籤樣式 */
         .badge {
             display: inline-flex;
             align-items: center;
-            padding: 0.25rem 0.75rem;
+            padding: 0.15rem 0.55rem;
             border-radius: 9999px;
-            font-size: 0.85rem;
+            font-size: 0.7rem;
+            font-weight: 600;
+            line-height: 1.2;
+        }
+        .badge-pif { background-color: #fef3c7; color: #92400e; border: 1px solid #fcd34d; }
+        .badge-perfumer { background-color: #f3e8ff; color: #6b21a8; border: 1px solid #c084fc; }
+        
+        /* 韓星專屬亮粉紫金特別徽章 */
+        .badge-celeb { 
+            background: linear-gradient(135deg, #fdf2f8 0%, #fae8ff 100%); 
+            color: #86198f; 
+            border: 1px solid #f0abfc;
+            box-shadow: 0 1px 2px rgba(192, 38, 211, 0.1);
+        }
+        
+        .badge-korea { background-color: #fee2e2; color: #dc2626; border: 1px solid #fca5a5; }
+        .badge-taiwan { background-color: #ccfbf1; color: #0f766e; border: 1px solid #5eead4; }
+        .badge-official { background-color: #f3f4f6; color: #4b5563; border: 1px solid #d1d5db; }
+
+        /* 記憶點金句 Banner */
+        .memory-banner {
+            background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+            border-left: 3px solid #0f172a;
+            padding: 0.35rem 0.65rem;
+            border-radius: 0 0.375rem 0.375rem 0;
+            font-size: 0.775rem;
+            color: #0f172a;
             font-weight: 600;
         }
-        .badge-perfumer { background-color: #f3e8ff; color: #7e22ce; border: 1px solid #d8b4fe; }
-        .badge-glowpick { background-color: #fee2e2; color: #dc2626; border: 1px solid #fca5a5; }
-        .badge-musinsa { background-color: #18181b; color: #ffffff; }
-        .badge-naver { background-color: #dcfce7; color: #16a34a; border: 1px solid #86efac; }
-        .badge-fragrantica { background-color: #eff6ff; color: #2563eb; border: 1px solid #93c5fd; }
-        .badge-official { background-color: #f3f4f6; color: #4b5563; border: 1px solid #d1d5db; }
+
+        .script-box {
+            border-radius: 0.375rem;
+            padding: 0.35rem 0.65rem;
+            font-size: 0.75rem;
+            line-height: 1.35;
+        }
+        .script-guest { background-color: #f8fafc; border-left: 3px solid #3b82f6; }
+        .script-media { background-color: #faf5ff; border-left: 3px solid #a855f7; }
 
         .summary-tag {
             background-color: #fafaf9;
             border-left: 3px solid #1c1917;
-            padding: 0.4rem 0.75rem;
-            border-radius: 0 0.5rem 0.5rem 0;
+            padding: 0.3rem 0.6rem;
+            border-radius: 0 0.375rem 0.375rem 0;
+            font-size: 0.75rem;
+            line-height: 1.35;
         }
 
         [contenteditable="true"]:hover {
@@ -68,7 +120,7 @@
         }
         [contenteditable="true"]:focus {
             outline: 2px solid #000;
-            background-color: rgba(255, 255, 255, 0.85);
+            background-color: rgba(255, 255, 255, 0.95);
         }
 
         /* PDF 列印 / 轉存完整多頁樣式 */
@@ -80,9 +132,6 @@
             html, body, main {
                 overflow: visible !important;
                 height: auto !important;
-                min-height: auto !important;
-                position: static !important;
-                display: block !important;
                 background-color: #faf8f5 !important;
                 -webkit-print-color-adjust: exact !important;
                 print-color-adjust: exact !important;
@@ -94,714 +143,864 @@
                 display: flex !important;
                 opacity: 1 !important;
                 height: 100vh !important;
-                min-height: 100vh !important;
                 page-break-after: always !important;
                 break-after: page !important;
                 page-break-inside: avoid !important;
-                break-inside: avoid !important;
-                box-sizing: border-box !important;
                 padding: 2.5rem 3.5rem !important;
+                box-sizing: border-box !important;
             }
         }
     </style>
 </head>
-<body class="flex flex-col h-screen select-none">
+<body class="select-none">
 
     <!-- 頂部導覽列 -->
     <header class="h-14 border-b border-stone-200 bg-stone-50/90 backdrop-blur px-8 flex items-center justify-between z-50">
         <div class="flex items-center space-x-3">
             <span class="font-cinzel text-lg tracking-widest font-bold text-stone-900" contenteditable="true">SW19</span>
-            <span class="text-xs text-stone-400 font-mono" contenteditable="true">| 產品教育訓練手冊 (TRAINING MANUAL)</span>
+            <span class="text-xs text-stone-400 font-mono" contenteditable="true">| 產品教育訓練手冊</span>
         </div>
         <div class="flex items-center space-x-6 text-xs tracking-wider text-stone-500">
-            <span id="slide-indicator" class="font-mono">01 / 15</span>
-            <button onclick="window.print()" class="hover:text-stone-900 transition flex items-center gap-1 font-semibold text-stone-700 bg-stone-200/80 px-3 py-1 rounded">
-                <i data-lucide="printer" class="w-3.5 h-3.5"></i> 轉存完整 PDF (15頁)
+            <span id="slide-indicator" class="font-mono">01 / 16</span>
+            <button onclick="window.print()" class="hover:text-stone-900 transition font-semibold text-stone-700 bg-stone-200/80 px-3 py-1 rounded">
+                轉存完整 PDF (16頁)
             </button>
-            <button onclick="toggleFullscreen()" class="hover:text-stone-900 transition flex items-center gap-1">
-                <i data-lucide="maximize" class="w-3.5 h-3.5"></i> 全螢幕
+            <button onclick="toggleFullscreen()" class="hover:text-stone-900 transition">
+                全螢幕
             </button>
         </div>
     </header>
 
-    <!-- 簡報內容區 -->
-    <main class="flex-1 relative bg-[#faf8f5]">
+    <!-- 簡報內容區 (嚴格不滾動) -->
+    <main class="bg-[#faf8f5]">
 
         <!-- SLIDE 1: 封面 -->
-        <section class="slide active flex-col justify-center items-center px-12 text-center" id="slide-1">
-            <div class="max-w-4xl space-y-6">
-                <div class="inline-block px-3 py-1 border border-stone-300 rounded-full text-xs tracking-[0.25em] text-stone-600 uppercase mb-4" contenteditable="true">
-                    產品教育訓練手冊
+        <section class="slide active text-center" id="slide-1">
+            <div class="slide-inner items-center space-y-6">
+                <div class="inline-block px-3 py-1 border border-stone-300 rounded-full text-xs tracking-[0.25em] text-stone-600 uppercase" contenteditable="true">
+                    Professional Training
                 </div>
-                <h1 class="font-cinzel text-5xl md:text-6xl text-stone-900 font-bold tracking-tight" contenteditable="true">
-                    SW19
+                <h1 class="font-cinzel text-6xl md:text-7xl text-stone-900 font-bold tracking-tight" contenteditable="true">
+                    教育訓練
                 </h1>
-                <p class="text-xl md:text-2xl text-stone-600 font-light tracking-wide" contenteditable="true">
-                    品牌理念、國際調香師、中英文香調與韓國網民真實評論解析
+                <p class="text-2xl md:text-3xl text-stone-600 font-light tracking-wide" contenteditable="true">
+                    SW19 品牌理念、調香大師代表作與全系列產品解析
                 </p>
-                <div class="w-16 h-0.5 bg-stone-800 mx-auto my-6"></div>
+                <div class="w-20 h-0.5 bg-stone-800 mx-auto my-2"></div>
                 <div class="text-xs text-stone-400 font-mono tracking-widest" contenteditable="true">
-                    淡香精 · 香精 · 手部身體護理 · 擴香 · 空間枕香噴霧
+                    EAU DE PARFUM · EXTRAIT DE PARFUM · HAND & BODY · HOME
                 </div>
             </div>
         </section>
 
         <!-- SLIDE 2: 目錄大綱 -->
-        <section class="slide flex-col justify-center px-16 max-w-6xl mx-auto" id="slide-2">
-            <div class="mb-6 text-center">
-                <span class="text-xs tracking-widest text-stone-400 uppercase font-mono" contenteditable="true">目錄大綱</span>
-                <h2 class="font-cinzel text-3xl font-bold text-stone-900 tracking-wide mt-1" contenteditable="true">教育訓練手冊目錄</h2>
-            </div>
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-3 text-left">
-                <div class="p-4 bg-white border border-stone-200 rounded shadow-sm cursor-pointer hover:border-stone-400 transition" onclick="goToSlide(2)">
-                    <span class="font-mono text-xs text-stone-400 font-bold">01</span>
-                    <h3 class="font-semibold text-stone-900 text-sm mt-1" contenteditable="true">品牌理念與銷售導購原則</h3>
-                    <p class="text-xs text-stone-500 mt-1" contenteditable="true">溫布頓森林概念、時間流動與專櫃選香技巧。</p>
+        <section class="slide" id="slide-2">
+            <div class="slide-inner space-y-5">
+                <div class="text-center">
+                    <h2 class="font-cinzel text-3xl font-bold text-stone-900" contenteditable="true">教育訓練手冊目錄</h2>
                 </div>
-                <div class="p-4 bg-white border border-stone-200 rounded shadow-sm cursor-pointer hover:border-stone-400 transition" onclick="goToSlide(3)">
-                    <span class="font-mono text-xs text-stone-400 font-bold">02</span>
-                    <h3 class="font-semibold text-stone-900 text-sm mt-1" contenteditable="true">韓國評價來源與市場重要性</h3>
-                    <p class="text-xs text-stone-500 mt-1" contenteditable="true">Glowpick、Musinsa、Naver、Fragrantica 數據價值。</p>
-                </div>
-                <div class="p-4 bg-white border border-stone-200 rounded shadow-sm cursor-pointer hover:border-stone-400 transition" onclick="goToSlide(4)">
-                    <span class="font-mono text-xs text-stone-400 font-bold">03</span>
-                    <h3 class="font-semibold text-stone-900 text-sm mt-1" contenteditable="true">國際調香師陣容 (7位名家)</h3>
-                    <p class="text-xs text-stone-500 mt-1" contenteditable="true">Aliénor, Marianne, Nathalie, Jérôme, Florian, Steve, Antoine。</p>
-                </div>
-                <div class="p-4 bg-white border border-stone-200 rounded shadow-sm cursor-pointer hover:border-stone-400 transition" onclick="goToSlide(5)">
-                    <span class="font-mono text-xs text-stone-400 font-bold">04</span>
-                    <h3 class="font-semibold text-stone-900 text-sm mt-1" contenteditable="true">淡香精 晨光篇：6am ＆ 8am</h3>
-                    <p class="text-xs text-stone-500 mt-1" contenteditable="true">薄霧針葉林 vs 清晨純白皂香香調與網民評測。</p>
-                </div>
-                <div class="p-4 bg-white border border-stone-200 rounded shadow-sm cursor-pointer hover:border-stone-400 transition" onclick="goToSlide(6)">
-                    <span class="font-mono text-xs text-stone-400 font-bold">05</span>
-                    <h3 class="font-semibold text-stone-900 text-sm mt-1" contenteditable="true">淡香精 日光篇：Noon ＆ 3pm</h3>
-                    <p class="text-xs text-stone-500 mt-1" contenteditable="true">湖畔水生鳶尾花 vs 陽光檸檬紅茶香調與網民評測。</p>
-                </div>
-                <div class="p-4 bg-white border border-stone-200 rounded shadow-sm cursor-pointer hover:border-stone-400 transition" onclick="goToSlide(7)">
-                    <span class="font-mono text-xs text-stone-400 font-bold">06</span>
-                    <h3 class="font-semibold text-stone-900 text-sm mt-1" contenteditable="true">淡香精 暮色篇：5pm ＆ Twilight</h3>
-                    <p class="text-xs text-stone-500 mt-1" contenteditable="true">新品生玫瑰木質 vs 日夜交界感性血橙香調與網民評測。</p>
-                </div>
-                <div class="p-4 bg-white border border-stone-200 rounded shadow-sm cursor-pointer hover:border-stone-400 transition" onclick="goToSlide(8)">
-                    <span class="font-mono text-xs text-stone-400 font-bold">07</span>
-                    <h3 class="font-semibold text-stone-900 text-sm mt-1" contenteditable="true">淡香精 夜幕篇：9pm ＆ Midnight</h3>
-                    <p class="text-xs text-stone-500 mt-1" contenteditable="true">煙燻香草營火 vs 柔霧白麝香被窩偽體香評測。</p>
-                </div>
-                <div class="p-4 bg-white border border-stone-200 rounded shadow-sm cursor-pointer hover:border-stone-400 transition" onclick="goToSlide(9)">
-                    <span class="font-mono text-xs text-stone-400 font-bold">08</span>
-                    <h3 class="font-semibold text-stone-900 text-sm mt-1" contenteditable="true">首爾香精：首爾 6am ＆ 首爾午夜</h3>
-                    <p class="text-xs text-stone-500 mt-1" contenteditable="true">韓屋黎明之木 vs 櫻桃黑巧克力微醺夜生活。</p>
-                </div>
-                <div class="p-4 bg-white border border-stone-200 rounded shadow-sm cursor-pointer hover:border-stone-400 transition" onclick="goToSlide(10)">
-                    <span class="font-mono text-xs text-stone-400 font-bold">09</span>
-                    <h3 class="font-semibold text-stone-900 text-sm mt-1" contenteditable="true">手部與身體護理全系列</h3>
-                    <p class="text-xs text-stone-500 mt-1" contenteditable="true">全身潔淨露、保濕乳液、護手霜水凝乳質地解析。</p>
+                <div class="grid grid-cols-3 gap-4 text-left">
+                    <div class="p-4 bg-white border border-stone-200 rounded-xl shadow-sm hover:border-stone-400 transition cursor-pointer" onclick="goToSlide(2)">
+                        <span class="font-mono text-xs text-stone-400 font-bold block mb-1">01</span>
+                        <h3 class="font-semibold text-stone-900 text-sm" contenteditable="true">品牌理念與導購原則</h3>
+                    </div>
+                    <div class="p-4 bg-white border border-stone-200 rounded-xl shadow-sm hover:border-stone-400 transition cursor-pointer" onclick="goToSlide(3)">
+                        <span class="font-mono text-xs text-stone-400 font-bold block mb-1">02</span>
+                        <h3 class="font-semibold text-stone-900 text-sm" contenteditable="true">國際調香師陣容與代表作</h3>
+                    </div>
+                    <div class="p-4 bg-white border border-stone-200 rounded-xl shadow-sm hover:border-stone-400 transition cursor-pointer" onclick="goToSlide(4)">
+                        <span class="font-mono text-xs text-stone-400 font-bold block mb-1">03</span>
+                        <h3 class="font-semibold text-stone-900 text-sm" contenteditable="true">EDP 晨光篇：6am ＆ 8am</h3>
+                    </div>
+                    <div class="p-4 bg-white border border-stone-200 rounded-xl shadow-sm hover:border-stone-400 transition cursor-pointer" onclick="goToSlide(5)">
+                        <span class="font-mono text-xs text-stone-400 font-bold block mb-1">04</span>
+                        <h3 class="font-semibold text-stone-900 text-sm" contenteditable="true">EDP 日光篇：Noon ＆ 3pm</h3>
+                    </div>
+                    <div class="p-4 bg-white border border-stone-200 rounded-xl shadow-sm hover:border-stone-400 transition cursor-pointer" onclick="goToSlide(6)">
+                        <span class="font-mono text-xs text-stone-400 font-bold block mb-1">05</span>
+                        <h3 class="font-semibold text-stone-900 text-sm" contenteditable="true">EDP 暮色篇：5pm ＆ Twilight</h3>
+                    </div>
+                    <div class="p-4 bg-white border border-stone-200 rounded-xl shadow-sm hover:border-stone-400 transition cursor-pointer" onclick="goToSlide(7)">
+                        <span class="font-mono text-xs text-stone-400 font-bold block mb-1">06</span>
+                        <h3 class="font-semibold text-stone-900 text-sm" contenteditable="true">EDP 夜幕篇：9pm ＆ Midnight</h3>
+                    </div>
+                    <div class="p-4 bg-white border border-stone-200 rounded-xl shadow-sm hover:border-stone-400 transition cursor-pointer" onclick="goToSlide(8)">
+                        <span class="font-mono text-xs text-stone-400 font-bold block mb-1">07</span>
+                        <h3 class="font-semibold text-stone-900 text-sm" contenteditable="true">首爾香精：Seoul 6am ＆ Midnight</h3>
+                    </div>
+                    <div class="p-4 bg-white border border-stone-200 rounded-xl shadow-sm hover:border-stone-400 transition cursor-pointer" onclick="goToSlide(9)">
+                        <span class="font-mono text-xs text-stone-400 font-bold block mb-1">08</span>
+                        <h3 class="font-semibold text-stone-900 text-sm" contenteditable="true">手部與身體護理</h3>
+                    </div>
+                    <div class="p-4 bg-white border border-stone-200 rounded-xl shadow-sm hover:border-stone-400 transition cursor-pointer" onclick="goToSlide(10)">
+                        <span class="font-mono text-xs text-stone-400 font-bold block mb-1">09</span>
+                        <h3 class="font-semibold text-stone-900 text-sm" contenteditable="true">居家空間香氛與附錄</h3>
+                    </div>
                 </div>
             </div>
         </section>
 
-        <!-- SLIDE 3: 品牌概念與導購引導重點 (字體排版放大兩倍) -->
-        <section class="slide flex-col justify-center px-12 max-w-6xl mx-auto" id="slide-3">
-            <div class="mb-6">
-                <span class="text-sm tracking-widest text-stone-400 uppercase font-mono font-semibold" contenteditable="true">第一單元 · 核心指引</span>
-                <h2 class="font-cinzel text-3xl md:text-4xl font-bold text-stone-900 mt-1" contenteditable="true">品牌核心概念與櫃點導購原則</h2>
-            </div>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                <div class="p-8 bg-white border border-stone-200 rounded-2xl space-y-5 shadow-sm">
-                    <h3 class="font-bold text-stone-900 text-2xl flex items-center gap-3">
-                        <i data-lucide="compass" class="w-6 h-6 text-stone-800"></i> <span contenteditable="true">品牌創作核心</span>
-                    </h3>
-                    <p class="text-base text-stone-700 leading-relaxed font-normal" contenteditable="true">
-                        SW19 以倫敦溫布頓公園的郵遞區號命名，將一天 24 小時的時間流動封存成氣味。
-                    </p>
-                    <div class="space-y-3 pt-2">
-                        <div class="p-4 bg-stone-50 rounded-xl border border-stone-100">
-                            <h4 class="font-bold text-stone-900 text-base mb-1" contenteditable="true">🌿 淡香精（時間系列）</h4>
-                            <p class="text-sm text-stone-600 leading-relaxed" contenteditable="true">以「一天中的時間流動」為創作核心，描繪特定時間點的情緒、場景與氛圍。</p>
-                        </div>
-                        <div class="p-4 bg-stone-50 rounded-xl border border-stone-100">
-                            <h4 class="font-bold text-stone-900 text-base mb-1" contenteditable="true">🏙️ 首爾系列（城市香精系列）</h4>
-                            <p class="text-sm text-stone-600 leading-relaxed" contenteditable="true">以「首爾 × 時間 × 城市氛圍」為靈感，主打極高濃度、對比衝突與鮮明態度。</p>
+        <!-- SLIDE 3: 品牌概念與導購原則 -->
+        <section class="slide" id="slide-3">
+            <div class="slide-inner space-y-4">
+                <div class="text-center">
+                    <span class="text-xs tracking-widest text-stone-400 uppercase font-mono font-semibold" contenteditable="true">第一單元 · 核心指引</span>
+                    <h2 class="font-cinzel text-2xl md:text-3xl font-bold text-stone-900 mt-0.5" contenteditable="true">品牌核心概念與櫃點導購原則</h2>
+                </div>
+                <div class="grid grid-cols-2 gap-5">
+                    <div class="p-5 bg-white border border-stone-200 rounded-xl space-y-2.5 shadow-sm">
+                        <h3 class="font-bold text-stone-900 text-lg" contenteditable="true">品牌創作核心</h3>
+                        <p class="text-xs text-stone-700 leading-relaxed" contenteditable="true">
+                            SW19 以倫敦溫布頓公園的郵遞區號命名，將一天 24 小時的時間流動封存成氣味。
+                        </p>
+                        <div class="space-y-2 pt-1 text-xs">
+                            <div class="p-2.5 bg-stone-50 rounded-lg border border-stone-100" contenteditable="true">
+                                <strong class="text-stone-900 block mb-0.5">🌿 淡香精（時間系列）</strong>
+                                以「一天中的時間流動」為創作核心，描繪特定時間點的情緒、場景與氛圍。
+                            </div>
+                            <div class="p-2.5 bg-stone-50 rounded-lg border border-stone-100" contenteditable="true">
+                                <strong class="text-stone-900 block mb-0.5">🏙️ 首爾系列（城市香精系列）</strong>
+                                以「首爾 × 時間 × 城市氛圍」為靈感，主打極高濃度、對比衝突與鮮明態度。
+                            </div>
                         </div>
                     </div>
+                    <div class="p-5 bg-white border border-stone-200 rounded-xl space-y-2.5 shadow-sm">
+                        <h3 class="font-bold text-stone-900 text-lg" contenteditable="true">櫃點介紹重點</h3>
+                        <ul class="space-y-2.5 text-xs text-stone-700 leading-relaxed">
+                            <li class="flex items-start gap-2" contenteditable="true">
+                                <span class="text-stone-900 font-bold">✨</span>
+                                <div><strong>時間引導選香</strong>：引導顧客從「一天中最喜歡的時間」或想要的心境狀態開始選香，不需特別強調香水濃淡。</div>
+                            </li>
+                            <li class="flex items-start gap-2" contenteditable="true">
+                                <span class="text-stone-900 font-bold">✨</span>
+                                <div><strong>系列明確區分</strong>：明確區分「首爾系列 ≠ 時間香味系列」，兩者不混合比較。</div>
+                            </li>
+                            <li class="flex items-start gap-2" contenteditable="true">
+                                <span class="text-stone-900 font-bold">✨</span>
+                                <div><strong>延伸日常保養</strong>：將香氣延伸至護手霜、髮香噴霧、空間枕香等居家環境。</div>
+                            </li>
+                        </ul>
+                    </div>
                 </div>
-                <div class="p-8 bg-white border border-stone-200 rounded-2xl space-y-5 shadow-sm">
-                    <h3 class="font-bold text-stone-900 text-2xl flex items-center gap-3">
-                        <i data-lucide="shopping-bag" class="w-6 h-6 text-stone-800"></i> <span contenteditable="true">櫃點介紹重點</span>
-                    </h3>
-                    <ul class="space-y-4 text-base text-stone-700 leading-relaxed">
-                        <li class="flex items-start gap-3">
-                            <span class="text-xl">✨</span>
-                            <div contenteditable="true">
-                                <strong class="text-stone-900 font-bold">時間引導選香</strong>：引導顧客從「一天中最喜歡的時間」或「想要的心境狀態」開始選香，不需特別強調香水濃淡或持香時間。
+            </div>
+        </section>
+
+        <!-- SLIDE 4: 國際調香師陣容 (精確核對官方背景) -->
+        <section class="slide" id="slide-4">
+            <div class="slide-inner space-y-2.5">
+                <div class="text-center">
+                    <span class="text-[11px] tracking-widest text-stone-400 uppercase font-mono" contenteditable="true">第二單元 · 品牌背書力</span>
+                    <h2 class="font-cinzel text-2xl font-bold text-stone-900" contenteditable="true">國際調香師陣容與官方背景代表作</h2>
+                </div>
+                <div class="grid grid-cols-2 gap-2.5 text-xs">
+                    <!-- Aliénor Massenet -->
+                    <div class="p-2.5 bg-white border border-stone-200 rounded-lg space-y-0.5 shadow-sm">
+                        <div class="flex items-center justify-between">
+                            <h4 class="font-bold text-stone-900 text-[13px]" contenteditable="true">Aliénor Massenet</h4>
+                            <span class="badge badge-perfumer" contenteditable="true">SW19 6am</span>
+                        </div>
+                        <p class="text-stone-700 text-[11px]" contenteditable="true"><strong>官方背景</strong>：Symrise VP 資深調香師，歷經 IFF 紐約與巴黎，多次榮獲 FIFI Award (含 FIFI 2020)。</p>
+                        <p class="text-stone-600 text-[11px] leading-tight" contenteditable="true"><strong>代表作</strong>：<strong>MEMO Paris</strong> (Inlé, Marfa, Eau de Memo)、Maison Martin Margiela、Penhaligon's。</p>
+                    </div>
+                    <!-- Marianne Nawrocki Sabatier -->
+                    <div class="p-2.5 bg-white border border-stone-200 rounded-lg space-y-0.5 shadow-sm">
+                        <div class="flex items-center justify-between">
+                            <h4 class="font-bold text-stone-900 text-[13px]" contenteditable="true">Marianne Nawrocki Sabatier</h4>
+                            <span class="badge badge-perfumer" contenteditable="true">SW19 8am / Noon / Twilight / Midnight</span>
+                        </div>
+                        <p class="text-stone-700 text-[11px]" contenteditable="true"><strong>官方背景</strong>：法國 Instant Parfums 首席調香大師 (Master Perfumer)。</p>
+                        <p class="text-stone-600 text-[11px] leading-tight" contenteditable="true"><strong>代表作</strong>：師承法國傳奇大師 Jean François Latty 與 Max Gavarry，傳承 UNESCO 認證 GRASSE 正統調香工法。</p>
+                    </div>
+                    <!-- Nathalie Benareau -->
+                    <div class="p-2.5 bg-white border border-stone-200 rounded-lg space-y-0.5 shadow-sm">
+                        <div class="flex items-center justify-between">
+                            <h4 class="font-bold text-stone-900 text-[13px]" contenteditable="true">Nathalie Benareau</h4>
+                            <span class="badge badge-perfumer" contenteditable="true">SW19 3pm</span>
+                        </div>
+                        <p class="text-stone-700 text-[11px]" contenteditable="true"><strong>官方背景</strong>：Symrise 首席調香大師，歷經 Firmenich 有機化學家、Intarome/Manheimer 培訓，FIFI Award 2020 得主。</p>
+                        <p class="text-stone-600 text-[11px] leading-tight" contenteditable="true"><strong>重點介紹</strong>：視香氣為說故事的語言，擅長多層次果香、茶香與貼膚麝香的和諧鋪陳。</p>
+                    </div>
+                    <!-- Jérôme Epinette -->
+                    <div class="p-2.5 bg-white border border-stone-200 rounded-lg space-y-0.5 shadow-sm">
+                        <div class="flex items-center justify-between">
+                            <h4 class="font-bold text-stone-900 text-[13px]" contenteditable="true">Jérôme Epinette</h4>
+                            <span class="badge badge-perfumer" contenteditable="true">SW19 5pm</span>
+                        </div>
+                        <p class="text-stone-700 text-[11px]" contenteditable="true"><strong>官方背景</strong>：Robertet VP of Perfumery，兩度榮獲 Fragrance Foundation Perfume Extraordinaire 大獎。</p>
+                        <p class="text-stone-600 text-[11px] leading-tight" contenteditable="true"><strong>代表作</strong>：<strong>Byredo</strong> (Bal d'Afrique, Gypsy Water, Super Cedar)、<strong>Atelier Cologne</strong> (Oolang Infini)。</p>
+                    </div>
+                    <!-- Florian Gallo -->
+                    <div class="p-2.5 bg-white border border-stone-200 rounded-lg space-y-0.5 shadow-sm">
+                        <div class="flex items-center justify-between">
+                            <h4 class="font-bold text-stone-900 text-[13px]" contenteditable="true">Florian Gallo</h4>
+                            <span class="badge badge-perfumer" contenteditable="true">SW19 9pm</span>
+                        </div>
+                        <p class="text-stone-700 text-[11px]" contenteditable="true"><strong>官方背景</strong>：自幼沉浸 Grasse 香水世界，加入法國頂級香料大廠，榮獲 2019 International Perfumer-Creator Award。</p>
+                        <p class="text-stone-600 text-[11px] leading-tight" contenteditable="true"><strong>重點介紹</strong>：對文化敏銳，擅長夜晚情緒張力、煙燻木質、乳香與感性氛圍營造。</p>
+                    </div>
+                    <!-- Steve Guo -->
+                    <div class="p-2.5 bg-white border border-stone-200 rounded-lg space-y-0.5 shadow-sm">
+                        <div class="flex items-center justify-between">
+                            <h4 class="font-bold text-stone-900 text-[13px]" contenteditable="true">Steve Guo</h4>
+                            <span class="badge badge-perfumer" contenteditable="true">SW19 Seoul 6am</span>
+                        </div>
+                        <p class="text-stone-700 text-[11px]" contenteditable="true"><strong>官方背景</strong>：深植東方傳統香文化，歷經 Robertet 格拉斯學校與巴黎淬鍊，2017 國際調香師獎 (International Perfumer's Prize) 得主。</p>
+                        <p class="text-stone-600 text-[11px] leading-tight" contenteditable="true"><strong>代表作</strong>：曾參與 <strong>Hugo Boss</strong>、<strong>Chloé</strong> 等大牌調香，擅長清冷內斂東方木質。</p>
+                    </div>
+                    <!-- Antoine Lie -->
+                    <div class="p-2.5 bg-white border border-stone-200 rounded-xl space-y-0.5 shadow-sm col-span-2">
+                        <div class="flex items-center justify-between">
+                            <h4 class="font-bold text-stone-900 text-[13px]" contenteditable="true">Antoine Lie</h4>
+                            <span class="badge badge-perfumer" contenteditable="true">SW19 Seoul Midnight</span>
+                        </div>
+                        <p class="text-stone-700 text-[11px]" contenteditable="true"><strong>官方背景</strong>：曾任職 Givaudan、IFF、Takasago 等頂級名廠，現創立獨立工作室 ALOE (Antoine Lie Olfactive Experience)。</p>
+                        <p class="text-stone-600 text-[11px] leading-tight" contenteditable="true"><strong>代表作</strong>：<strong>Tom Ford</strong> (Private Blend 系列作品)、<strong>Trudon</strong>、<strong>Etat Libre d'Orange</strong> (Rossy de Palma)、Comme des Garçons、Versace。</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+<!-- SLIDE 5: EDP (6am & 8am) -->
+        <section class="slide" id="slide-5">
+            <div class="slide-inner space-y-4">
+                <div class="text-center">
+                    <span class="text-xs tracking-widest text-stone-400 uppercase font-mono" contenteditable="true">第三單元 · 晨光時光香型</span>
+                    <h2 class="font-cinzel text-3xl font-bold text-stone-900" contenteditable="true">6am ＆ 8am</h2>
+                </div>
+                <div class="grid grid-cols-2 gap-6">
+                    <!-- 6am -->
+                    <div class="p-5 bg-white border border-stone-200 rounded-xl space-y-2.5 shadow-sm">
+                        <div class="flex items-center justify-between border-b pb-1.5">
+                            <div class="flex items-center gap-2">
+                                <h3 class="font-bold text-stone-900 text-lg" contenteditable="true">6am</h3>
+                                <span class="badge badge-celeb" contenteditable="true">Joy / 路雲 愛用</span>
                             </div>
-                        </li>
-                        <li class="flex items-start gap-3">
-                            <span class="text-xl">✨</span>
-                            <div contenteditable="true">
-                                <strong class="text-stone-900 font-bold">系列明確區分</strong>：明確區分「首爾系列 ≠ 時間香味系列」，兩者不混合比較。
+                            <span class="text-xs text-stone-500 font-medium" contenteditable="true">Aliénor Massenet</span>
+                        </div>
+                        <p class="text-xs text-stone-600 italic bg-stone-50 p-2 rounded" contenteditable="true">
+                            <strong>產品說明</strong>：日出之前溫布頓森林薄霧流動，閃耀晨露與濕潤泥土交織而成的草本木質香氣。
+                        </p>
+                        <div class="text-[11px] text-stone-700 bg-stone-50 p-2 rounded space-y-0.5">
+                            <div contenteditable="true"><strong>Top</strong>: 佛手柑、葡萄柚、茴香籽 ｜ <strong>Heart</strong>: 小豆蔻、鼠尾草、羅勒 ｜ <strong>Base</strong>: 艾草、雪松、麝香</div>
+                        </div>
+                        <div class="script-box script-guest">
+                            <strong class="text-blue-800">🗣️ 招待話術</strong>：<span contenteditable="true">「清晨日出前帶露水的松針森林，微涼草本帶濕潤泥土，Joy 與路雲漢南店主推香。」</span>
+                        </div>
+                        <div class="space-y-1 text-xs text-stone-600">
+                            <div class="p-1.5 bg-red-50/60 rounded border border-red-100" contenteditable="true"><span class="badge badge-korea text-[9px] mr-1">韓網實測</span> 悟香水清涼晨霧版，炎夏降溫極佳，留香約 3.5 小時。</div>
+                            <div class="p-1.5 bg-teal-50/60 rounded border border-teal-100" contenteditable="true"><span class="badge badge-taiwan text-[9px] mr-1">台友實測</span> Dcard：「高溫潮濕夏天噴完全不黏，自帶冷氣房森林」。</div>
+                        </div>
+                        <div class="summary-tag text-stone-800" contenteditable="true">💬 <strong>總結</strong>：<strong>「Aesop 悟香水清涼晨霧版，清冷仙氣草本木質」</strong></div>
+                    </div>
+
+                    <!-- 8am -->
+                    <div class="p-5 bg-white border border-amber-300 rounded-xl space-y-2.5 shadow-sm relative">
+                        <div class="flex items-center justify-between border-b pb-1.5">
+                            <div class="flex items-center gap-2">
+                                <h3 class="font-bold text-stone-900 text-lg" contenteditable="true">8am</h3>
+                                <span class="badge badge-pif" contenteditable="true">PIF 登錄核准</span>
                             </div>
-                        </li>
-                        <li class="flex items-start gap-3">
-                            <span class="text-xl">✨</span>
-                            <div contenteditable="true">
-                                <strong class="text-stone-900 font-bold">延伸日常保養</strong>：將香氣延伸至護手霜、髮香噴霧、空間枕香等居家環境。
+                            <span class="text-xs text-stone-500 font-medium" contenteditable="true">Marianne Nawrocki</span>
+                        </div>
+                        <p class="text-xs text-stone-600 italic bg-stone-50 p-2 rounded" contenteditable="true">
+                            <strong>產品說明</strong>：走入清新冷冽晨間空氣，雪滴花與沉香交織出純淨香氣，城市在靜謐能量中甦醒。
+                        </p>
+                        <div class="text-[11px] text-stone-700 bg-stone-50 p-2 rounded space-y-0.5">
+                            <div contenteditable="true"><strong>Top</strong>: 綠葉、純水、鈴蘭 ｜ <strong>Heart</strong>: 雪花蓮、紙莎草、茉莉 ｜ <strong>Base</strong>: 沉香、雪松、麝香</div>
+                        </div>
+                        <div class="script-box script-guest">
+                            <strong class="text-blue-800">🗣️ 招待話術</strong>：<span contenteditable="true">「乾淨無侵略性純白皂香，剛用高級香皂洗完手、穿上烘乾白襯衫的天生體香。」</span>
+                        </div>
+                        <div class="space-y-1 text-xs text-stone-600">
+                            <div class="p-1.5 bg-red-50/60 rounded border border-red-100" contenteditable="true"><span class="badge badge-korea text-[9px] mr-1">韓網實測</span> Naver 評為最無害體香，純白肥皂泡沫感，留香約 3 小時。</div>
+                            <div class="p-1.5 bg-teal-50/60 rounded border border-teal-100" contenteditable="true"><span class="badge badge-taiwan text-[9px] mr-1">台友實測</span> PTT：「面試、約會第一印象滿分，像自然體香散發」。</div>
+                        </div>
+                        <div class="summary-tag text-stone-800" contenteditable="true">💬 <strong>總結</strong>：<strong>「高級白肥皂乾淨體香，白襯衫通勤必備無害香」</strong></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SLIDE 6: EDP (Noon & 3pm) -->
+        <section class="slide" id="slide-6">
+            <div class="slide-inner space-y-4">
+                <div class="text-center">
+                    <span class="text-sm tracking-widest text-stone-400 uppercase font-mono" contenteditable="true">第四單元 · 日光午後香型</span>
+                    <h2 class="font-cinzel text-3xl font-bold text-stone-900" contenteditable="true">Noon ＆ 3pm</h2>
+                </div>
+                <div class="grid grid-cols-2 gap-6">
+                    <!-- Noon -->
+                    <div class="p-5 bg-white border border-stone-200 rounded-xl space-y-2.5 shadow-sm">
+                        <div class="flex items-center justify-between border-b pb-1.5">
+                            <h3 class="font-bold text-stone-900 text-lg" contenteditable="true">Noon</h3>
+                            <span class="text-xs text-stone-500 font-medium" contenteditable="true">Marianne Nawrocki</span>
+                        </div>
+                        <p class="text-xs text-stone-600 italic bg-stone-50 p-2 rounded" contenteditable="true">
+                            <strong>產品說明</strong>：正午陽光在湖面上閃耀，樹蔭下盛開的鳶尾花束與清涼水感和諧交融。
+                        </p>
+                        <div class="text-[11px] text-stone-700 bg-stone-50 p-2 rounded space-y-0.5">
+                            <div contenteditable="true"><strong>Top</strong>: 綠葉、水感、薄荷、杏仁花 ｜ <strong>Heart</strong>: 岩蘭草、薰衣草、鈴蘭 ｜ <strong>Base</strong>: 鳶尾根、雪松、琥珀</div>
+                        </div>
+                        <div class="script-box script-guest">
+                            <strong class="text-blue-800">🗣️ 招待話術</strong>：<span contenteditable="true">「正午陽光灑在波光粼粼的湖面上，微風吹來盛開鳶尾花的水潤香氣，知性溫柔。」</span>
+                        </div>
+                        <div class="space-y-1 text-xs text-stone-600">
+                            <div class="p-1.5 bg-red-50/60 rounded border border-red-100" contenteditable="true"><span class="badge badge-korea text-[9px] mr-1">韓網實測</span> 水感薄荷清透，中後調轉為微粉感鳶尾與琥珀，留香約 4 小時。</div>
+                            <div class="p-1.5 bg-teal-50/60 rounded border border-teal-100" contenteditable="true"><span class="badge badge-taiwan text-[9px] mr-1">台友實測</span> Dcard：「水靈清透不粉感，像漫步湖畔的氣質千金」。</div>
+                        </div>
+                        <div class="summary-tag text-stone-800" contenteditable="true">💬 <strong>總結</strong>：<strong>「正午湖畔清涼水汽與知性鳶尾花，優雅千金高級香」</strong></div>
+                    </div>
+
+                    <!-- 3pm -->
+                    <div class="p-5 bg-white border border-amber-300 rounded-xl space-y-2.5 shadow-sm relative">
+                        <div class="flex items-center justify-between border-b pb-1.5">
+                            <div class="flex items-center gap-2">
+                                <h3 class="font-bold text-stone-900 text-lg" contenteditable="true">3pm</h3>
+                                <span class="badge badge-pif" contenteditable="true">PIF 登錄核准</span>
+                                <span class="badge badge-celeb" contenteditable="true">伯賢 / Joy 同款</span>
                             </div>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </section>
-
-        <!-- SLIDE 4: 韓國評價來源與市場重要性 -->
-        <section class="slide flex-col justify-center px-16 max-w-6xl mx-auto" id="slide-4">
-            <div class="mb-4">
-                <span class="text-xs tracking-widest text-stone-400 uppercase font-mono" contenteditable="true">第二單元 · 市場調研背景</span>
-                <h2 class="font-cinzel text-2xl font-bold text-stone-900" contenteditable="true">韓國核心評論平台介紹與市場重要性</h2>
-            </div>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div class="p-5 bg-white border border-stone-200 rounded-lg space-y-2">
-                    <div class="flex items-center justify-between">
-                        <h3 class="font-bold text-stone-900 flex items-center gap-2" contenteditable="true">
-                            <span class="badge badge-glowpick">Glowpick</span> 글로우픽
-                        </h3>
-                    </div>
-                    <p class="text-xs text-stone-700 font-medium" contenteditable="true">韓國最具權威的「美妝香氛盲測評分榜」，由 100% 真實購買認證會員打分。</p>
-                    <p class="text-xs text-stone-500" contenteditable="true"><strong>數據價值</strong>：消費者查詢「客觀對標哪款大牌」、「暈香率」、「持香時間短長」的核心決策站。</p>
-                </div>
-                <div class="p-5 bg-white border border-stone-200 rounded-lg space-y-2">
-                    <div class="flex items-center justify-between">
-                        <h3 class="font-bold text-stone-900 flex items-center gap-2" contenteditable="true">
-                            <span class="badge badge-musinsa">Musinsa</span> 무신사
-                        </h3>
-                    </div>
-                    <p class="text-xs text-stone-700 font-medium" contenteditable="true">韓國最大的潮流時尚與生活方式電商，聚集全韓 MZ 世代年輕族群。</p>
-                    <p class="text-xs text-stone-500" contenteditable="true"><strong>數據價值</strong>：反映真實購買量、男女穿搭場合風格適配度，並擁有官方專訪第一手資訊。</p>
-                </div>
-                <div class="p-5 bg-white border border-stone-200 rounded-lg space-y-2">
-                    <div class="flex items-center justify-between">
-                        <h3 class="font-bold text-stone-900 flex items-center gap-2" contenteditable="true">
-                            <span class="badge badge-naver">Naver Blog</span> 네이버 블로그
-                        </h3>
-                    </div>
-                    <p class="text-xs text-stone-700 font-medium" contenteditable="true">韓國最大搜尋入口網站，匯集「自費購買（내돈내산）」深度圖文開箱。</p>
-                    <p class="text-xs text-stone-500" contenteditable="true"><strong>數據價值</strong>：護手霜水感不黏膩質地、髮香噴霧飄香半徑等日常使用感細節來源。</p>
-                </div>
-                <div class="p-5 bg-white border border-stone-200 rounded-lg space-y-2">
-                    <div class="flex items-center justify-between">
-                        <h3 class="font-bold text-stone-900 flex items-center gap-2" contenteditable="true">
-                            <span class="badge badge-fragrantica">Fragrantica KR</span>
-                        </h3>
-                    </div>
-                    <p class="text-xs text-stone-700 font-medium" contenteditable="true">專業香水資料庫韓國站，匯集重度香水玩家與調香結構深度分析。</p>
-                    <p class="text-xs text-stone-500" contenteditable="true"><strong>數據價值</strong>：前中後調轉折變化、調香大師（如 Jérôme Epinette）風格解析。</p>
-                </div>
-            </div>
-        </section>
-
-        <!-- SLIDE 5: 國際調香師陣容 (卡片放大) -->
-        <section class="slide flex-col justify-center px-12 max-w-6xl mx-auto" id="slide-5">
-            <div class="mb-4">
-                <span class="text-sm tracking-widest text-stone-400 uppercase font-mono" contenteditable="true">第三單元 · 調香大師</span>
-                <h2 class="font-cinzel text-3xl font-bold text-stone-900" contenteditable="true">國際調香師陣容</h2>
-            </div>
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
-                <div class="p-5 bg-white border border-stone-200 rounded-xl space-y-2 shadow-sm">
-                    <div class="flex items-center justify-between">
-                        <h4 class="font-bold text-stone-900 text-base" contenteditable="true">Aliénor Massenet</h4>
-                        <span class="badge badge-perfumer" contenteditable="true">6am</span>
-                    </div>
-                    <p class="text-xs text-stone-600 leading-relaxed" contenteditable="true">Symrise 副總裁暨資深調香師，多次獲國際香水大獎。擅長以自然元素建立細膩香氣結構。</p>
-                </div>
-                <div class="p-5 bg-white border border-stone-200 rounded-xl space-y-2 shadow-sm">
-                    <div class="flex items-center justify-between">
-                        <h4 class="font-bold text-stone-900 text-base" contenteditable="true">Marianne Nawrocki</h4>
-                        <span class="badge badge-perfumer" contenteditable="true">8am/Noon/Twilight/Midnight</span>
-                    </div>
-                    <p class="text-xs text-stone-600 leading-relaxed" contenteditable="true">法國 Instant Parfums 首席調香師，師承格拉斯傳統工法。擅長描繪時間狀態與無侵略貼膚感。</p>
-                </div>
-                <div class="p-5 bg-white border border-stone-200 rounded-xl space-y-2 shadow-sm">
-                    <div class="flex items-center justify-between">
-                        <h4 class="font-bold text-stone-900 text-base" contenteditable="true">Nathalie Benareau</h4>
-                        <span class="badge badge-perfumer" contenteditable="true">3pm</span>
-                    </div>
-                    <p class="text-xs text-stone-600 leading-relaxed" contenteditable="true">Symrise 首席調香師，國際香水大獎得主。將香氣視為語言，擅長如故事般鋪陳多層次面向。</p>
-                </div>
-                <div class="p-5 bg-white border border-stone-200 rounded-xl space-y-2 shadow-sm">
-                    <div class="flex items-center justify-between">
-                        <h4 class="font-bold text-stone-900 text-base" contenteditable="true">Jérôme Epinette</h4>
-                        <span class="badge badge-perfumer" contenteditable="true">5pm (玫瑰)</span>
-                    </div>
-                    <p class="text-xs text-stone-600 leading-relaxed" contenteditable="true">Byredo 御用傳奇調香大師。擅長以俐落現代感重塑經典花香，賦予生玫瑰純粹透明感。</p>
-                </div>
-                <div class="p-5 bg-white border border-stone-200 rounded-xl space-y-2 shadow-sm">
-                    <div class="flex items-center justify-between">
-                        <h4 class="font-bold text-stone-900 text-base" contenteditable="true">Florian Gallo</h4>
-                        <span class="badge badge-perfumer" contenteditable="true">9pm</span>
-                    </div>
-                    <p class="text-xs text-stone-600 leading-relaxed" contenteditable="true">國際調香創作大獎得主。重視文化敏感度與夜晚情緒張力，擅長煙燻營火與深邃氛圍營造。</p>
-                </div>
-                <div class="p-5 bg-white border border-stone-200 rounded-xl space-y-2 shadow-sm">
-                    <div class="flex items-center justify-between">
-                        <h4 class="font-bold text-stone-900 text-base" contenteditable="true">Steve Guo</h4>
-                        <span class="badge badge-perfumer" contenteditable="true">首爾 6am</span>
-                    </div>
-                    <p class="text-xs text-stone-600 leading-relaxed" contenteditable="true">Robertet 調香學校結業。結合東方傳統香文化與法式訓練，展現安靜、內斂的清冷木質。</p>
-                </div>
-                <div class="p-5 bg-white border border-stone-200 rounded-xl space-y-2 shadow-sm md:col-span-3">
-                    <div class="flex items-center justify-between">
-                        <h4 class="font-bold text-stone-900 text-base" contenteditable="true">Antoine Lie</h4>
-                        <span class="badge badge-perfumer" contenteditable="true">首爾午夜</span>
-                    </div>
-                    <p class="text-xs text-stone-600 leading-relaxed" contenteditable="true">30年資歷知名先鋒調香師，創立獨立工作室 ALOE。強調自由實驗精神、感官衝突與強烈態度。</p>
-                </div>
-            </div>
-        </section>
-
-        <!-- SLIDE 6: 淡香精 (6am & 8am) -->
-        <section class="slide flex-col justify-center px-12 max-w-6xl mx-auto" id="slide-6">
-            <div class="mb-4">
-                <span class="text-sm tracking-widest text-stone-400 uppercase font-mono" contenteditable="true">第四單元 · 清晨時光香型</span>
-                <h2 class="font-cinzel text-3xl font-bold text-stone-900" contenteditable="true">6am 清晨薄霧 ＆ 8am 清晨八點</h2>
-            </div>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <!-- 6am -->
-                <div class="p-6 bg-white border border-stone-200 rounded-xl space-y-3 shadow-sm">
-                    <div class="flex items-center justify-between border-b pb-2">
-                        <h3 class="font-bold text-stone-900 text-xl" contenteditable="true">6am 清晨薄霧</h3>
-                        <span class="text-sm text-stone-500 font-medium" contenteditable="true">調香師: Aliénor Massenet</span>
-                    </div>
-                    <p class="text-sm text-stone-700 italic" contenteditable="true">“Feel the scent of glistening morning dew and moist soil.”</p>
-                    <div class="text-xs text-stone-800 space-y-1 bg-stone-50 p-3 rounded-lg">
-                        <div contenteditable="true"><strong>前調 Top</strong>: 佛手柑 (Bergamot)、葡萄柚 (Grapefruit)、茴香籽 (Anise Seeds)</div>
-                        <div contenteditable="true"><strong>中調 Heart</strong>: 小豆蔻 (Cardamom)、快樂鼠尾草 (Clary Sage)、羅勒 (Basil)</div>
-                        <div contenteditable="true"><strong>基調 Base</strong>: 艾草 (Wormwood)、雪松 (Cedarwood)、麝香 (Musk)</div>
-                    </div>
-                    <div class="pt-1">
-                        <span class="badge badge-glowpick" contenteditable="true">Glowpick / Musinsa 評價</span>
-                        <p class="text-xs text-stone-600 mt-1" contenteditable="true">前調有傳統韓藥房微苦草本感，隨後轉為乾淨清冷的森林薄霧與濕潤泥土。</p>
-                    </div>
-                    <div class="summary-tag text-xs font-semibold text-stone-800" contenteditable="true">
-                        💬 網紅/買家總結：<strong>「Aesop 悟香水的清涼晨霧版，清冷文青首選」</strong>
-                    </div>
-                </div>
-                <!-- 8am -->
-                <div class="p-6 bg-white border border-stone-200 rounded-xl space-y-3 shadow-sm">
-                    <div class="flex items-center justify-between border-b pb-2">
-                        <h3 class="font-bold text-stone-900 text-xl" contenteditable="true">8am 清晨八點</h3>
-                        <span class="text-sm text-stone-500 font-medium" contenteditable="true">調香師: Marianne Nawrocki</span>
-                    </div>
-                    <p class="text-sm text-stone-700 italic" contenteditable="true">“A pure scent of snowdrops and oud, blooming in the morning sunlight.”</p>
-                    <div class="text-xs text-stone-800 space-y-1 bg-stone-50 p-3 rounded-lg">
-                        <div contenteditable="true"><strong>前調 Top</strong>: 綠葉 (Green Leaf)、純水 (Pure Water)、鈴蘭 (Lily of the Valley)</div>
-                        <div contenteditable="true"><strong>中調 Heart</strong>: 雪花蓮 (Snowdrop)、紙莎草 (Papyrus)、茉莉 (Jasmine)、乾草 (Hay)</div>
-                        <div contenteditable="true"><strong>基調 Base</strong>: 沉香 (Oud)、雪松 (Cedarwood)、麝香 (Musk)</div>
-                    </div>
-                    <div class="pt-1">
-                        <span class="badge badge-naver" contenteditable="true">Naver 部落格 / 官方評論</span>
-                        <p class="text-xs text-stone-600 mt-1" contenteditable="true">比 6am 少了泥土草本苦味，多了一種剛沐浴後的純白肥皂泡沫與晨光白花香。</p>
-                    </div>
-                    <div class="summary-tag text-xs font-semibold text-stone-800" contenteditable="true">
-                        💬 網紅/買家總結：<strong>「剛用高級肥皂洗完手的乾淨體香，白襯衫通勤必備」</strong>
+                            <span class="text-xs text-stone-500 font-medium" contenteditable="true">Nathalie Benareau</span>
+                        </div>
+                        <p class="text-xs text-stone-600 italic bg-stone-50 p-2 rounded" contenteditable="true">
+                            <strong>產品說明</strong>：午後燦爛陽光下晨露蒸散，盛開花香與一杯漂浮著檸檬的黑茶相互交融。
+                        </p>
+                        <div class="text-[11px] text-stone-700 bg-stone-50 p-2 rounded space-y-0.5">
+                            <div contenteditable="true"><strong>Top</strong>: 佛手柑、大黃、橘子 ｜ <strong>Heart</strong>: 雪松、茉莉、梔子花 ｜ <strong>Base</strong>: 白麝香、岩蘭草</div>
+                        </div>
+                        <div class="script-box script-guest">
+                            <strong class="text-blue-800">🗣️ 招待話術</strong>：<span contenteditable="true">「多汁冰鎮檸檬大黃紅茶，半小時後轉為純淨白麝香，伯賢與 Joy 私下最愛。」</span>
+                        </div>
+                        <div class="space-y-1 text-xs text-stone-600">
+                            <div class="p-1.5 bg-red-50/60 rounded border border-red-100" contenteditable="true"><span class="badge badge-korea text-[9px] mr-1">韓網實測</span> Glowpick 全年霸榜，白麝香貼膚持久度可達 4～5 小時。</div>
+                            <div class="p-1.5 bg-teal-50/60 rounded border border-teal-100" contenteditable="true"><span class="badge badge-taiwan text-[9px] mr-1">台友實測</span> Threads：「台灣夏天本命茶香，噴上像自帶陽光濾鏡」。</div>
+                        </div>
+                        <div class="summary-tag text-stone-800" contenteditable="true">💬 <strong>總結</strong>：<strong>「微甜清爽檸檬紅茶，大眾接受度最高、盲買送禮冠軍」</strong></div>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- SLIDE 7: 淡香精 (Noon & 3pm) -->
-        <section class="slide flex-col justify-center px-12 max-w-6xl mx-auto" id="slide-7">
-            <div class="mb-4">
-                <span class="text-sm tracking-widest text-stone-400 uppercase font-mono" contenteditable="true">第五單元 · 日光午後香型</span>
-                <h2 class="font-cinzel text-3xl font-bold text-stone-900" contenteditable="true">Noon 正午十二點 ＆ 3pm 午後驕陽</h2>
-            </div>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <!-- Noon -->
-                <div class="p-6 bg-white border border-stone-200 rounded-xl space-y-3 shadow-sm">
-                    <div class="flex items-center justify-between border-b pb-2">
-                        <h3 class="font-bold text-stone-900 text-xl" contenteditable="true">Noon 正午十二點</h3>
-                        <span class="text-sm text-stone-500 font-medium" contenteditable="true">調香師: Marianne Nawrocki</span>
-                    </div>
-                    <p class="text-sm text-stone-700 italic" contenteditable="true">“The bouquet of a full bloom iris and cool aqua scent.”</p>
-                    <div class="text-xs text-stone-800 space-y-1 bg-stone-50 p-3 rounded-lg">
-                        <div contenteditable="true"><strong>前調 Top</strong>: 綠葉 (Green Leaf)、水感 (Aqua)、薄荷 (Mint)、杏仁花 (Almond Blossom)</div>
-                        <div contenteditable="true"><strong>中調 Heart</strong>: 岩蘭草 (Vetiver)、薰衣草 (Lavender)、鈴蘭 (Lily of the Valley)</div>
-                        <div contenteditable="true"><strong>基調 Base</strong>: 鳶尾根 (Orris)、雪松 (Cedarwood)、琥珀 (Amber)、麝香 (Musk)</div>
-                    </div>
-                    <div class="pt-1">
-                        <span class="badge badge-musinsa" contenteditable="true">Musinsa 買家專區</span>
-                        <p class="text-xs text-stone-600 mt-1" contenteditable="true">湖畔微風水汽與優雅鳶尾花，水靈通透兼具女人味，水生調敏感者建議先試香。</p>
-                    </div>
-                    <div class="summary-tag text-xs font-semibold text-stone-800" contenteditable="true">
-                        💬 網紅/買家總結：<strong>「正午湖畔清涼水汽與知性鳶尾花，優雅高級香」</strong>
-                    </div>
+        <!-- SLIDE 7: EDP (5pm & Twilight) -->
+        <section class="slide" id="slide-7">
+            <div class="slide-inner space-y-4">
+                <div class="text-center">
+                    <span class="text-sm tracking-widest text-stone-400 uppercase font-mono" contenteditable="true">第五單元 · 暮色微光香型</span>
+                    <h2 class="font-cinzel text-3xl font-bold text-stone-900" contenteditable="true">5pm ＆ Twilight</h2>
                 </div>
-                <!-- 3pm -->
-                <div class="p-6 bg-white border border-stone-200 rounded-xl space-y-3 shadow-sm">
-                    <div class="flex items-center justify-between border-b pb-2">
-                        <h3 class="font-bold text-stone-900 text-xl" contenteditable="true">3pm 午後驕陽 (熱銷冠軍)</h3>
-                        <span class="text-sm text-stone-500 font-medium" contenteditable="true">調香師: Nathalie Benareau</span>
+                <div class="grid grid-cols-2 gap-6">
+                    <!-- 5pm -->
+                    <div class="p-5 bg-white border border-amber-300 rounded-xl space-y-2.5 shadow-sm relative">
+                        <div class="flex items-center justify-between border-b pb-1.5">
+                            <div class="flex items-center gap-2">
+                                <h3 class="font-bold text-stone-900 text-xl" contenteditable="true">5pm</h3>
+                                <span class="badge badge-pif" contenteditable="true">PIF 登錄核准</span>
+                            </div>
+                            <span class="text-xs text-stone-500 font-medium" contenteditable="true">Jérôme Epinette (Byredo大師)</span>
+                        </div>
+                        <p class="text-xs text-stone-600 italic bg-stone-50 p-2 rounded" contenteditable="true">
+                            <strong>產品說明</strong>：暮色微光中修剪枝葉的清脆綠意鮮切粉玫瑰，與橡木苔廣藿香交織出沉穩底蘊。
+                        </p>
+                        <div class="text-[11px] text-stone-700 bg-stone-50 p-2 rounded space-y-0.5">
+                            <div contenteditable="true"><strong>Top</strong>: 綠葉、小蒼蘭 ｜ <strong>Heart</strong>: 粉紅玫瑰、木蘭花 ｜ <strong>Base</strong>: 橡木苔、廣藿香、麝香</div>
+                        </div>
+                        <div class="script-box script-guest">
+                            <strong class="text-blue-800">🗣️ 招待話術</strong>：<span contenteditable="true">「剪斷玫瑰花枝時的清脆綠葉感，尾調收在沉穩橡木苔，男女皆宜。」</span>
+                        </div>
+                        <div class="space-y-1 text-xs text-stone-600">
+                            <div class="p-1.5 bg-red-50/60 rounded border border-red-100" contenteditable="true"><span class="badge badge-korea text-[9px] mr-1">韓網實測</span> Glowpick 5.0 滿分，帶水汽鮮切粉玫瑰（생장미），無厚重粉味。</div>
+                            <div class="p-1.5 bg-teal-50/60 rounded border border-teal-100" contenteditable="true"><span class="badge badge-taiwan text-[9px] mr-1">台友實測</span> 「男生也能駕馭的氣質生玫瑰，無老氣脂粉味，俐落中性」。</div>
+                        </div>
+                        <div class="summary-tag text-stone-800" contenteditable="true">💬 <strong>總結</strong>：<strong>「清透鮮切生玫瑰＋橡木苔，打破性別界限的氣質偽體香」</strong></div>
                     </div>
-                    <p class="text-sm text-stone-700 italic" contenteditable="true">“The subtle scent of black tea with lemon under beaming sunlight.”</p>
-                    <div class="text-xs text-stone-800 space-y-1 bg-stone-50 p-3 rounded-lg">
-                        <div contenteditable="true"><strong>前調 Top</strong>: 佛手柑 (Bergamot)、大黃 (Rhubarb)、橘子 (Tangerine)</div>
-                        <div contenteditable="true"><strong>中調 Heart</strong>: 雪松 (Cedarwood)、茉莉 (Jasmine)、梔子花 (Gardenia)</div>
-                        <div contenteditable="true"><strong>基調 Base</strong>: 白麝香 (White Musk)、岩蘭草 (Vetiver)、鳶尾根 (Orris)</div>
-                    </div>
-                    <div class="pt-1">
-                        <span class="badge badge-glowpick" contenteditable="true">Glowpick 盲測榜首</span>
-                        <p class="text-xs text-stone-600 mt-1" contenteditable="true">酸甜多汁檸檬紅茶開場，半小時後轉為乾淨無害貼膚白麝香，伯賢/Joy同款。</p>
-                    </div>
-                    <div class="summary-tag text-xs font-semibold text-stone-800" contenteditable="true">
-                        💬 網紅/買家總結：<strong>「微甜清爽檸檬紅茶，大眾接受度最高、盲買送禮冠軍」</strong>
+
+                    <!-- Twilight -->
+                    <div class="p-5 bg-white border border-stone-200 rounded-xl space-y-2.5 shadow-sm">
+                        <div class="flex items-center justify-between border-b pb-1.5">
+                            <div class="flex items-center gap-2">
+                                <h3 class="font-bold text-stone-900 text-lg" contenteditable="true">Twilight</h3>
+                                <span class="badge badge-celeb" contenteditable="true">Krystal 鄭秀晶 代言款</span>
+                            </div>
+                            <span class="text-xs text-stone-500 font-medium" contenteditable="true">Marianne Nawrocki</span>
+                        </div>
+                        <p class="text-xs text-stone-600 italic bg-stone-50 p-2 rounded" contenteditable="true">
+                            <strong>產品說明</strong>：白晝融入黑夜，甜美血橙夕陽緩緩過渡至如月光閃耀的琥珀灰與麝香。
+                        </p>
+                        <div class="text-[11px] text-stone-700 bg-stone-50 p-2 rounded space-y-0.5">
+                            <div contenteditable="true"><strong>Top</strong>: 血橙、黑胡椒、杏花 ｜ <strong>Heart</strong>: 雪松、廣藿香、羊絨 ｜ <strong>Base</strong>: 龍涎香、麝香</div>
+                        </div>
+                        <div class="script-box script-guest">
+                            <strong class="text-blue-800">🗣️ 招待話術</strong>：<span contenteditable="true">「Krystal 代言形象主打款，甜美血橙過渡到羊絨木質，極具都會高級感。」</span>
+                        </div>
+                        <div class="space-y-1 text-xs text-stone-600">
+                            <div class="p-1.5 bg-red-50/60 rounded border border-red-100" contenteditable="true"><span class="badge badge-korea text-[9px] mr-1">韓網實測</span> 介於 3pm 與 9pm 之間，尾調乾燥木質沉穩，留香約 4 小時。</div>
+                            <div class="p-1.5 bg-teal-50/60 rounded border border-teal-100" contenteditable="true"><span class="badge badge-taiwan text-[9px] mr-1">台友實測</span> PTT：「溫暖包覆的羊絨木質調，適合秋冬傍晚散步閱讀」。</div>
+                        </div>
+                        <div class="summary-tag text-stone-800" contenteditable="true">💬 <strong>總結</strong>：<strong>「日夜交界的神秘暖調羊絨木質，越聞越耐聞的秋冬黑馬」</strong></div>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- SLIDE 8: 淡香精 (5pm & Twilight) -->
-        <section class="slide flex-col justify-center px-12 max-w-6xl mx-auto" id="slide-8">
-            <div class="mb-4">
-                <span class="text-sm tracking-widest text-stone-400 uppercase font-mono" contenteditable="true">第六單元 · 暮色微光香型</span>
-                <h2 class="font-cinzel text-3xl font-bold text-stone-900" contenteditable="true">5pm 午後五點 (生玫瑰) ＆ Twilight 暮光黃昏</h2>
-            </div>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <!-- 5pm -->
-                <div class="p-6 bg-white border border-stone-200 rounded-xl space-y-3 shadow-sm">
-                    <div class="flex items-center justify-between border-b pb-2">
-                        <h3 class="font-bold text-stone-900 text-xl" contenteditable="true">5pm 玫瑰花瓣 (最新香型)</h3>
-                        <span class="text-sm text-stone-500 font-medium" contenteditable="true">調香師: Jérôme Epinette</span>
-                    </div>
-                    <p class="text-sm text-stone-700 italic" contenteditable="true">“Fresh cut rose petals blooming in the golden twilight.”</p>
-                    <div class="text-xs text-stone-800 space-y-1 bg-stone-50 p-3 rounded-lg">
-                        <div contenteditable="true"><strong>前調 Top</strong>: 綠葉 (Green Notes)、小蒼蘭 (Freesia)</div>
-                        <div contenteditable="true"><strong>中調 Heart</strong>: 粉紅玫瑰 (Rose)、木蘭花 (Magnolia)</div>
-                        <div contenteditable="true"><strong>基調 Base</strong>: 橡木苔 (Oakmoss)、廣藿香 (Patchouli)、麝香 (Musk)</div>
-                    </div>
-                    <div class="pt-1">
-                        <span class="badge badge-fragrantica" contenteditable="true">Fragrantica KR / Glowpick 5.0</span>
-                        <p class="text-xs text-stone-600 mt-1" contenteditable="true">帶清脆剪枝綠意的鮮切生玫瑰，無厚重粉味。中後調轉為溫潤膚感，建議噴衣物延長留香。</p>
-                    </div>
-                    <div class="summary-tag text-xs font-semibold text-stone-800" contenteditable="true">
-                        💬 網紅/買家總結：<strong>「清透鮮切生玫瑰，氣質中性氛圍感偽體香」</strong>
-                    </div>
+        <!-- SLIDE 8: EDP (9pm & Midnight) -->
+        <section class="slide" id="slide-8">
+            <div class="slide-inner space-y-4">
+                <div class="text-center">
+                    <span class="text-sm tracking-widest text-stone-400 uppercase font-mono" contenteditable="true">第六單元 · 深夜靜謐香型</span>
+                    <h2 class="font-cinzel text-3xl font-bold text-stone-900" contenteditable="true">9pm ＆ Midnight</h2>
                 </div>
-                <!-- Twilight -->
-                <div class="p-6 bg-white border border-stone-200 rounded-xl space-y-3 shadow-sm">
-                    <div class="flex items-center justify-between border-b pb-2">
-                        <h3 class="font-bold text-stone-900 text-xl" contenteditable="true">Twilight 暮光黃昏</h3>
-                        <span class="text-sm text-stone-500 font-medium" contenteditable="true">調香師: Marianne Nawrocki</span>
+                <div class="grid grid-cols-2 gap-6">
+                    <!-- 9pm -->
+                    <div class="p-5 bg-white border border-stone-200 rounded-xl space-y-2.5 shadow-sm">
+                        <div class="flex items-center justify-between border-b pb-1.5">
+                            <h3 class="font-bold text-stone-900 text-lg" contenteditable="true">9pm</h3>
+                            <span class="text-xs text-stone-500 font-medium" contenteditable="true">Florian Gallo</span>
+                        </div>
+                        <p class="text-xs text-stone-600 italic bg-stone-50 p-2 rounded" contenteditable="true">
+                            <strong>產品說明</strong>：夜幕降臨後的溫布頓森林，煙燻營火氣息與甜美香草柔和交融的浪漫時刻。
+                        </p>
+                        <div class="text-[11px] text-stone-700 bg-stone-50 p-2 rounded space-y-0.5">
+                            <div contenteditable="true"><strong>Top</strong>: 粉紅胡椒、橙花、棉花糖 ｜ <strong>Heart</strong>: 栗子、愈創木、崖柏 ｜ <strong>Base</strong>: 檀香、香草、秘魯香脂</div>
+                        </div>
+                        <div class="script-box script-guest">
+                            <strong class="text-blue-800">🗣️ 招待話術</strong>：<span contenteditable="true">「森林營火與濃郁香草，微苦煙燻感與烤棉花糖香甜，持香度全系列最高。」</span>
+                        </div>
+                        <div class="space-y-1 text-xs text-stone-600">
+                            <div class="p-1.5 bg-red-50/60 rounded border border-red-100" contenteditable="true"><span class="badge badge-korea text-[9px] mr-1">韓網實測</span> 擴香半徑達 1.5 公尺，留香長達 6～8 小時。</div>
+                            <div class="p-1.5 bg-teal-50/60 rounded border border-teal-100" contenteditable="true"><span class="badge badge-taiwan text-[9px] mr-1">台友實測</span> Dcard：「像穿厚毛衣坐在壁爐前吃烤棉花糖，極具安全感」。</div>
+                        </div>
+                        <div class="summary-tag text-stone-800" contenteditable="true">💬 <strong>總結</strong>：<strong>「壁爐柴火與香草交織，持香與擴香最強的秋冬約會香」</strong></div>
                     </div>
-                    <p class="text-sm text-stone-700 italic" contenteditable="true">“A sensual scent with two distinct allures as day blends into night.”</p>
-                    <div class="text-xs text-stone-800 space-y-1 bg-stone-50 p-3 rounded-lg">
-                        <div contenteditable="true"><strong>前調 Top</strong>: 血橙 (Blood Orange)、黑胡椒 (Black Pepper)、杏花 (Apricot Blossom)、小蒼蘭 (Freesia)</div>
-                        <div contenteditable="true"><strong>中調 Heart</strong>: 雪松 (Cedarwood)、廣藿香 (Patchouli)、羊絨 (Cashmere)</div>
-                        <div contenteditable="true"><strong>基調 Base</strong>: 龍涎香 (Ambergrey)、麝香 (Musk)、岩玫瑰 (Cistus)</div>
-                    </div>
-                    <div class="pt-1">
-                        <span class="badge badge-glowpick" contenteditable="true">Glowpick 香評專區</span>
-                        <p class="text-xs text-stone-600 mt-1" contenteditable="true">介於 3pm 的清新與 9pm 的濃烈之間，夕陽乾燥木質帶微甜香草與寺廟木香。</p>
-                    </div>
-                    <div class="summary-tag text-xs font-semibold text-stone-800" contenteditable="true">
-                        💬 網紅/買家總結：<strong>「日夜交界的神秘暖調木質，越聞越耐聞的秋冬黑馬」</strong>
+
+                    <!-- Midnight -->
+                    <div class="p-5 bg-white border border-amber-300 rounded-xl space-y-2.5 shadow-sm relative">
+                        <div class="flex items-center justify-between border-b pb-1.5">
+                            <div class="flex items-center gap-2">
+                                <h3 class="font-bold text-stone-900 text-lg" contenteditable="true">Midnight</h3>
+                                <span class="badge badge-pif" contenteditable="true">PIF 登錄核准</span>
+                                <span class="badge badge-celeb" contenteditable="true">Krystal / 安孝燮 / 伯賢 愛用</span>
+                            </div>
+                            <span class="text-xs text-stone-500 font-medium" contenteditable="true">Marianne Nawrocki</span>
+                        </div>
+                        <p class="text-xs text-stone-600 italic bg-stone-50 p-2 rounded" contenteditable="true">
+                            <strong>產品說明</strong>：夜深人靜柔和月光籠罩，兩個戀人的氣息交融，合而為一的極致溫柔。
+                        </p>
+                        <div class="text-[11px] text-stone-700 bg-stone-50 p-2 rounded space-y-0.5">
+                            <div contenteditable="true"><strong>Top</strong>: 鈴蘭、白蓮花 ｜ <strong>Heart</strong>: 白麝香、粉香調 ｜ <strong>Base</strong>: 感性麝香、檀香、安息香脂</div>
+                        </div>
+                        <div class="script-box script-guest">
+                            <strong class="text-blue-800">🗣️ 招待話術</strong>：<span contenteditable="true">「最迷人的戀人被窩香，純淨白麝香融合柔霧奶木感，安孝燮與伯賢私藏同款。」</span>
+                        </div>
+                        <div class="space-y-1 text-xs text-stone-600">
+                            <div class="p-1.5 bg-red-50/60 rounded border border-red-100" contenteditable="true"><span class="badge badge-korea text-[9px] mr-1">韓網實測</span> 柔軟蓬鬆白麝香包覆感（폭닥폭닥），擴香偏貼身。</div>
+                            <div class="p-1.5 bg-teal-50/60 rounded border border-teal-100" contenteditable="true"><span class="badge badge-taiwan text-[9px] mr-1">台友實測</span> Threads：「噴在大衣上味道超舒服，男友聞到立刻抱緊」。</div>
+                        </div>
+                        <div class="summary-tag text-stone-800" contenteditable="true">💬 <strong>總結</strong>：<strong>「戀人相擁的蓬鬆被窩體香，極致貼膚溫柔的偽體香天花板」</strong></div>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- SLIDE 9: 淡香精 (9pm & Midnight) -->
-        <section class="slide flex-col justify-center px-12 max-w-6xl mx-auto" id="slide-9">
-            <div class="mb-4">
-                <span class="text-sm tracking-widest text-stone-400 uppercase font-mono" contenteditable="true">第七單元 · 深夜靜謐香型</span>
-                <h2 class="font-cinzel text-3xl font-bold text-stone-900" contenteditable="true">9pm 夜晚時分 ＆ Midnight 午夜星空</h2>
-            </div>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <!-- 9pm -->
-                <div class="p-6 bg-white border border-stone-200 rounded-xl space-y-3 shadow-sm">
-                    <div class="flex items-center justify-between border-b pb-2">
-                        <h3 class="font-bold text-stone-900 text-xl" contenteditable="true">9pm 夜晚時分</h3>
-                        <span class="text-sm text-stone-500 font-medium" contenteditable="true">調香師: Florian Gallo</span>
-                    </div>
-                    <p class="text-sm text-stone-700 italic" contenteditable="true">“Sweet vanilla melds with smoky firewood in the silent woods.”</p>
-                    <div class="text-xs text-stone-800 space-y-1 bg-stone-50 p-3 rounded-lg">
-                        <div contenteditable="true"><strong>前調 Top</strong>: 粉紅胡椒 (Pink Pepper)、橙花 (Orange Flower)、丁香 (Clove)、棉花糖 (Marshmallow)</div>
-                        <div contenteditable="true"><strong>中調 Heart</strong>: 栗子 (Chestnut)、愈創木 (Gaiacwood)、崖柏 (Cade)</div>
-                        <div contenteditable="true"><strong>基調 Base</strong>: 檀香 (Sandalwood)、香草 (Vanilla)、秘魯香脂 (Peru Balsam)、羊絨香 (Cashmeran)</div>
-                    </div>
-                    <div class="pt-1">
-                        <span class="badge badge-glowpick" contenteditable="true">Glowpick 買家評測</span>
-                        <p class="text-xs text-stone-600 mt-1" contenteditable="true">濃郁香草冰淇淋融入壁爐燃木微苦煙燻感。留香擴香全系列最強，成熟性感。</p>
-                    </div>
-                    <div class="summary-tag text-xs font-semibold text-stone-800" contenteditable="true">
-                        💬 網紅/買家總結：<strong>「壁爐柴火與香草交織，持香最強的成熟秋冬約會香」</strong>
-                    </div>
+        <!-- SLIDE 9: 首爾香精 (SEOUL SERIES) -->
+        <section class="slide" id="slide-9">
+            <div class="slide-inner space-y-4">
+                <div class="text-center">
+                    <span class="text-sm tracking-widest text-stone-400 uppercase font-mono" contenteditable="true">第七單元 · 城市香精</span>
+                    <h2 class="font-cinzel text-3xl font-bold text-stone-900" contenteditable="true">Seoul 6am ＆ Seoul Midnight</h2>
                 </div>
-                <!-- Midnight -->
-                <div class="p-6 bg-white border border-stone-200 rounded-xl space-y-3 shadow-sm">
-                    <div class="flex items-center justify-between border-b pb-2">
-                        <h3 class="font-bold text-stone-900 text-xl" contenteditable="true">Midnight 午夜星空 (偽體香代表)</h3>
-                        <span class="text-sm text-stone-500 font-medium" contenteditable="true">調香師: Marianne Nawrocki</span>
+                <div class="grid grid-cols-2 gap-6">
+                    <!-- Seoul 6am -->
+                    <div class="p-5 bg-white border border-amber-300 rounded-xl space-y-2.5 shadow-sm relative">
+                        <div class="flex items-center justify-between border-b pb-1.5">
+                            <div class="flex items-center gap-2">
+                                <h3 class="font-bold text-stone-900 text-lg" contenteditable="true">Seoul 6am</h3>
+                                <span class="badge badge-pif" contenteditable="true">PIF 登錄核准</span>
+                            </div>
+                            <span class="text-xs text-stone-500 font-medium" contenteditable="true">Steve Guo</span>
+                        </div>
+                        <p class="text-xs text-stone-600 italic bg-stone-50 p-2 rounded" contenteditable="true">
+                            <strong>產品說明</strong>：首爾韓屋黎明甦醒氣息，藍色晨光灑在百年木瓦上，雪松與老松木地板散發冷冽內斂木質。
+                        </p>
+                        <div class="text-[11px] text-stone-700 bg-stone-50 p-2 rounded space-y-0.5">
+                            <div contenteditable="true"><strong>主題</strong>: SILENT WOOD ｜ <strong>Top</strong>: 柏樹、粉紅胡椒、鼠尾草 ｜ <strong>Base</strong>: 雪松木、麝香、羊絨木</div>
+                        </div>
+                        <div class="script-box script-guest">
+                            <strong class="text-blue-800">🗣️ 招待話術</strong>：<span contenteditable="true">「首爾市中心韓屋清晨，百年木瓦上灑落晨光，冷冽辛香雪松木，氣場強大。」</span>
+                        </div>
+                        <div class="space-y-1 text-xs text-stone-600">
+                            <div class="p-1.5 bg-red-50/60 rounded border border-red-100" contenteditable="true"><span class="badge badge-korea text-[9px] mr-1">韓網實測</span> 冷冽穿透力與老木地板沉穩，持香超過 8 小時。</div>
+                            <div class="p-1.5 bg-teal-50/60 rounded border border-teal-100" contenteditable="true"><span class="badge badge-taiwan text-[9px] mr-1">台友實測</span> 「極具高級建築空間感的清冷木質，穿西裝大衣非常有氣勢」。</div>
+                        </div>
+                        <div class="summary-tag text-stone-800" contenteditable="true">💬 <strong>總結</strong>：<strong>「韓屋黎明與冷冽辛香雪松木，內斂幹練的現代都會木質調」</strong></div>
                     </div>
-                    <p class="text-sm text-stone-700 italic" contenteditable="true">“A quiet and sensual atmosphere under moonlight. White flowers and musk.”</p>
-                    <div class="text-xs text-stone-800 space-y-1 bg-stone-50 p-3 rounded-lg">
-                        <div contenteditable="true"><strong>前調 Top</strong>: 鈴蘭 (Lily of the Valley)、白蓮花 (White Lotus)</div>
-                        <div contenteditable="true"><strong>中調 Heart</strong>: 白麝香 (White Musk)、粉香調 (Powdery Notes)</div>
-                        <div contenteditable="true"><strong>基調 Base</strong>: 感性麝香 (Sensual Musk)、檀香 (Sandalwood)、安息香脂 (Benzoin)</div>
-                    </div>
-                    <div class="pt-1">
-                        <span class="badge badge-glowpick" contenteditable="true">Glowpick / Naver 部落格</span>
-                        <p class="text-xs text-stone-600 mt-1" contenteditable="true">更柔和、無辛辣嗆味的 Diptyque 肌膚之華。純淨被窩相擁包覆感，擴香偏貼膚。</p>
-                    </div>
-                    <div class="summary-tag text-xs font-semibold text-stone-800" contenteditable="true">
-                        💬 網紅/買家總結：<strong>「戀人相擁的蓬鬆被窩體香，極致溫柔偽體香天花板」</strong>
+
+                    <!-- Seoul Midnight -->
+                    <div class="p-5 bg-white border border-amber-300 rounded-xl space-y-2.5 shadow-sm relative">
+                        <div class="flex items-center justify-between border-b pb-1.5">
+                            <div class="flex items-center gap-2">
+                                <h3 class="font-bold text-stone-900 text-lg" contenteditable="true">Seoul Midnight</h3>
+                                <span class="badge badge-pif" contenteditable="true">PIF 登錄核准</span>
+                            </div>
+                            <span class="text-xs text-stone-500 font-medium" contenteditable="true">Antoine Lie</span>
+                        </div>
+                        <p class="text-xs text-stone-600 italic bg-stone-50 p-2 rounded" contenteditable="true">
+                            <strong>產品說明</strong>：首爾午夜燈光與音樂交織，吧台上黑巧克力、櫻桃利口酒與人參交織的微醺夜生活感官。
+                        </p>
+                        <div class="text-[11px] text-stone-700 bg-stone-50 p-2 rounded space-y-0.5">
+                            <div contenteditable="true"><strong>主題</strong>: CHERRY ELIXIR ｜ <strong>Top</strong>: 五味子、櫻桃、天芥菜 ｜ <strong>Base</strong>: 沉香、岩蘭草、人參</div>
+                        </div>
+                        <div class="script-box script-guest">
+                            <strong class="text-blue-800">🗣️ 招待話術</strong>：<span contenteditable="true">「首爾夜生活酒吧裡的櫻桃利口酒加上苦甜黑巧克力，性感迷幻。」</span>
+                        </div>
+                        <div class="space-y-1 text-xs text-stone-600">
+                            <div class="p-1.5 bg-red-50/60 rounded border border-red-100" contenteditable="true"><span class="badge badge-korea text-[9px] mr-1">韓網實測</span> 擴香半徑極廣，夜生活圈熱議香型。</div>
+                            <div class="p-1.5 bg-teal-50/60 rounded border border-teal-100" contenteditable="true"><span class="badge badge-taiwan text-[9px] mr-1">台友實測</span> Threads：「微醺大人感櫻桃黑巧酒香，冬天去酒吧詢問度 100%」。</div>
+                        </div>
+                        <div class="summary-tag text-stone-800" contenteditable="true">💬 <strong>總結</strong>：<strong>「微醺櫻桃利口酒與黑巧克力，霓虹派對專屬的性感張力香」</strong></div>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- SLIDE 10: 首爾香精 -->
-        <section class="slide flex-col justify-center px-12 max-w-6xl mx-auto" id="slide-10">
-            <div class="mb-4">
-                <span class="text-sm tracking-widest text-stone-400 uppercase font-mono" contenteditable="true">第八單元 · 城市頂級香精</span>
-                <h2 class="font-cinzel text-3xl font-bold text-stone-900" contenteditable="true">首爾系列 (Extrait de Parfum 香精)</h2>
-            </div>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <!-- SEOUL 6am -->
-                <div class="p-6 bg-white border border-stone-200 rounded-xl space-y-3 shadow-sm">
-                    <div class="flex items-center justify-between border-b pb-2">
-                        <h3 class="font-bold text-stone-900 text-xl" contenteditable="true">首爾 6am (SILENT WOOD)</h3>
-                        <span class="text-sm text-stone-500 font-medium" contenteditable="true">調香師: Steve Guo</span>
-                    </div>
-                    <p class="text-sm text-stone-700 italic" contenteditable="true">“The awakening scent of dawn in a hanok, in the midst of Seoul.”</p>
-                    <div class="text-xs text-stone-800 space-y-1 bg-stone-50 p-3 rounded-lg">
-                        <div contenteditable="true"><strong>前調 Top</strong>: 柏樹 (Cypress)、粉紅胡椒 (Pink Pepper)、鼠尾草 (Sage)、丁香葉 (Clove Leaf)</div>
-                        <div contenteditable="true"><strong>中調 Heart</strong>: 癒創木 (Gaiac Wood)、含羞草 (Mimosa)</div>
-                        <div contenteditable="true"><strong>基調 Base</strong>: 雪松木 (Cedarwood)、麝香 (Musk)、羊絨木 (Cashmere Wood)</div>
-                    </div>
-                    <div class="pt-1">
-                        <span class="badge badge-musinsa" contenteditable="true">Musinsa 評測</span>
-                        <p class="text-xs text-stone-600 mt-1" contenteditable="true">韓屋瓦片晨光與老木地板。少了原版泥土感，多了冷冽辛香與俐落都會感，留香極長。</p>
-                    </div>
-                    <div class="summary-tag text-xs font-semibold text-stone-800" contenteditable="true">
-                        💬 網紅/買家總結：<strong>「韓屋黎明與冷冽木質，內斂幹練的現代都市木質調」</strong>
-                    </div>
+        <!-- SLIDE 10: 手部與身體護理 -->
+        <section class="slide" id="slide-10">
+            <div class="slide-inner space-y-5">
+                <div class="text-center">
+                    <span class="text-sm tracking-widest text-stone-400 uppercase font-mono" contenteditable="true">第八單元 · 身體護理</span>
+                    <h2 class="font-cinzel text-3xl font-bold text-stone-900" contenteditable="true">手部與身體護理</h2>
                 </div>
-                <!-- SEOUL Midnight -->
-                <div class="p-6 bg-white border border-stone-200 rounded-xl space-y-3 shadow-sm">
-                    <div class="flex items-center justify-between border-b pb-2">
-                        <h3 class="font-bold text-stone-900 text-xl" contenteditable="true">首爾午夜 (CHERRY ELIXIR)</h3>
-                        <span class="text-sm text-stone-500 font-medium" contenteditable="true">調香師: Antoine Lie</span>
+                <div class="grid grid-cols-3 gap-6">
+                    <!-- 護手霜 -->
+                    <div class="p-6 bg-white border border-amber-300 rounded-2xl space-y-3 shadow-sm flex flex-col justify-between">
+                        <div class="space-y-2">
+                            <div class="flex items-center justify-between border-b pb-2">
+                                <h4 class="font-bold text-stone-900 text-base" contenteditable="true">護手霜系列</h4>
+                                <span class="badge badge-pif text-[10px]" contenteditable="true">PIF: Midnight/5pm</span>
+                            </div>
+                            <p class="text-xs text-stone-600 leading-relaxed bg-stone-50 p-2.5 rounded-lg" contenteditable="true">
+                                <strong>產品說明</strong>：水凝乳（수분크림）水感清爽質地，推開即化，含乳木果油與三色堇萃取，打鍵盤、滑手機完全不沾油。
+                            </p>
+                            <div class="script-box script-guest">
+                                <strong class="text-blue-800">🗣️ 話術</strong>：<span contenteditable="true">「擦完秒吸收不黏手！推薦 Midnight 與 5pm，隨身補香打底神器。」</span>
+                            </div>
+                            <div class="text-[11px] text-stone-600" contenteditable="true"><span class="badge badge-taiwan text-[8px] mr-1">台友</span> Dcard大推「台灣夏天擦完全不悶不厚重」。</div>
+                        </div>
+                        <div class="summary-tag text-stone-800" contenteditable="true">💬 <strong>總結</strong>：<strong>「水感清爽不沾指紋，心機偽體香補香王」</strong></div>
                     </div>
-                    <p class="text-sm text-stone-700 italic" contenteditable="true">“The midnight scent created by Seoul’s lights and sensations.”</p>
-                    <div class="text-xs text-stone-800 space-y-1 bg-stone-50 p-3 rounded-lg">
-                        <div contenteditable="true"><strong>前調 Top</strong>: 五味子 (Omija)、櫻桃 (Cherry)、天芥菜 (Heliotrope)</div>
-                        <div contenteditable="true"><strong>中調 Heart</strong>: 杏仁 (Almond)、黑巧克力 (Dark Chocolate)、李子 (Plum)</div>
-                        <div contenteditable="true"><strong>基調 Base</strong>: 沉香 (Oud)、岩蘭草 (Vetiver)、人參 (Ginseng)</div>
+
+                    <!-- 身體洗沐與乳液 -->
+                    <div class="p-6 bg-white border border-amber-300 rounded-2xl space-y-3 shadow-sm flex flex-col justify-between">
+                        <div class="space-y-2">
+                            <div class="flex items-center justify-between border-b pb-2">
+                                <h4 class="font-bold text-stone-900 text-base" contenteditable="true">身體洗沐與乳液</h4>
+                                <span class="badge badge-pif text-[10px]" contenteditable="true">PIF: 3pm/Midnight</span>
+                            </div>
+                            <p class="text-xs text-stone-600 leading-relaxed bg-stone-50 p-2.5 rounded-lg" contenteditable="true">
+                                <strong>產品說明</strong>：將香氣融入每日沐浴護膚，添加神經醯胺與植萃精華，洗後肌膚水潤不緊繃，被窩留香自然。
+                            </p>
+                            <div class="script-box script-guest">
+                                <strong class="text-blue-800">🗣️ 話術</strong>：<span contenteditable="true">「睡前擦上 Midnight 乳液，整晚被窩散發純淨體香，療癒放鬆整天疲憊。」</span>
+                            </div>
+                            <div class="text-[11px] text-stone-600" contenteditable="true"><span class="badge badge-korea text-[8px] mr-1">韓網</span> 官方商城滿分回購，洗澡時整個浴室充滿香氣。</div>
+                        </div>
+                        <div class="summary-tag text-stone-800" contenteditable="true">💬 <strong>總結</strong>：<strong>「沐浴後自帶天生偽體香，被窩裡最安心治癒」</strong></div>
                     </div>
-                    <div class="pt-1">
-                        <span class="badge badge-musinsa" contenteditable="true">Musinsa 評測</span>
-                        <p class="text-xs text-stone-600 mt-1" contenteditable="true">微醺櫻桃利口酒＋苦甜黑巧克力。顛覆原版純淨白麝香，極具性感張力。</p>
-                    </div>
-                    <div class="summary-tag text-xs font-semibold text-stone-800" contenteditable="true">
-                        💬 網紅/買家總結：<strong>「櫻桃利口酒與黑巧克力，霓虹派對微醺性感香」</strong>
+
+                    <!-- 髮香噴霧 -->
+                    <div class="p-6 bg-white border border-amber-300 rounded-2xl space-y-3 shadow-sm flex flex-col justify-between">
+                        <div class="space-y-2">
+                            <div class="flex items-center justify-between border-b pb-2">
+                                <h4 class="font-bold text-stone-900 text-base" contenteditable="true">髮香噴霧</h4>
+                                <span class="badge badge-pif text-[10px]" contenteditable="true">PIF: 3pm/Midnight</span>
+                            </div>
+                            <p class="text-xs text-stone-600 leading-relaxed bg-stone-50 p-2.5 rounded-lg" contenteditable="true">
+                                <strong>產品說明</strong>：含葵花籽與大豆修護蛋白，低酒精修護配方，讓香氣隨髮絲動態自然飄散。
+                            </p>
+                            <div class="script-box script-guest">
+                                <strong class="text-blue-800">🗣️ 話術</strong>：<span contenteditable="true">「出門前輕噴髮尾，微風吹過飄出淡淡紅茶與白麝香，非常自然。」</span>
+                            </div>
+                            <div class="text-[11px] text-stone-600" contenteditable="true"><span class="badge badge-taiwan text-[8px] mr-1">台友</span> Threads：「吃完火鍋噴一下立刻除臭去味」。</div>
+                        </div>
+                        <div class="summary-tag text-stone-800" contenteditable="true">💬 <strong>總結</strong>：<strong>「微風吹過髮梢的心機發香神器，自然散發茶香」</strong></div>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- SLIDE 11: 手部與身體護理 (HAND & BODY) -->
-        <section class="slide flex-col justify-center px-12 max-w-6xl mx-auto" id="slide-11">
-            <div class="mb-4">
-                <span class="text-sm tracking-widest text-stone-400 uppercase font-mono" contenteditable="true">第九單元 · 手部與身體護理</span>
-                <h2 class="font-cinzel text-3xl font-bold text-stone-900" contenteditable="true">HAND & BODY (手部與身體護理全品類)</h2>
-            </div>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <!-- 護手霜 -->
-                <div class="p-6 bg-white border border-stone-200 rounded-xl space-y-3 shadow-sm">
-                    <div class="flex items-center justify-between border-b pb-2">
-                        <h4 class="font-bold text-stone-900 text-lg" contenteditable="true">護手霜系列 (HAND CREAM)</h4>
-                        <span class="badge badge-naver" contenteditable="true">水凝乳水感質地</span>
-                    </div>
-                    <p class="text-sm text-stone-700 leading-relaxed" contenteditable="true">
-                        <strong>配方特色</strong>：含乳木果油、三色堇與玻尿酸。水感清爽推開即化，完全不黏手機螢幕與鍵盤。
-                    </p>
-                    <div class="pt-1">
-                        <span class="badge badge-naver" contenteditable="true">Naver 部落格開箱實測</span>
-                        <p class="text-xs text-stone-600 mt-1" contenteditable="true">3pm 帶檸檬奶霜感，午夜款護手霜是韓妞人手一支的隨身偽體香必備單品。</p>
-                    </div>
-                    <div class="summary-tag text-xs font-semibold text-stone-800" contenteditable="true">
-                        💬 網紅/買家總結：<strong>「清爽水凝乳吸收極快，打鍵盤不沾油的治癒保養」</strong>
-                    </div>
+        <!-- SLIDE 11: 居家空間香氛 (依據截圖更新官方意境、完整NOTES與韓台實測) -->
+        <section class="slide" id="slide-11">
+            <div class="slide-inner space-y-4">
+                <div class="text-center">
+                    <span class="text-sm tracking-widest text-stone-400 uppercase font-mono" contenteditable="true">第九單元 · 居家生活美學</span>
+                    <h2 class="font-cinzel text-3xl font-bold text-stone-900" contenteditable="true">居家空間香氛系列</h2>
                 </div>
-                <!-- 全身潔淨露與保濕乳液 -->
-                <div class="p-6 bg-white border border-stone-200 rounded-xl space-y-3 shadow-sm">
-                    <div class="flex items-center justify-between border-b pb-2">
-                        <h4 class="font-bold text-stone-900 text-lg" contenteditable="true">身體洗沐與保濕 (HAND & BODY CARE)</h4>
-                        <span class="badge badge-official" contenteditable="true">8am / Midnight</span>
+                <div class="grid grid-cols-2 gap-6">
+                    <!-- 空間擴香 -->
+                    <div class="p-6 bg-white border border-stone-200 rounded-xl space-y-2.5 shadow-sm">
+                        <div class="flex items-center justify-between border-b pb-2">
+                            <h4 class="font-bold text-stone-900 text-lg" contenteditable="true">空間擴香組 (DIFFUSER 系列)</h4>
+                            <span class="badge badge-official" contenteditable="true">極簡陶瓷瓶身工藝</span>
+                        </div>
+                        <p class="text-xs text-stone-600 italic bg-stone-50 p-2 rounded" contenteditable="true">
+                            <strong>SW19 HOME FRAGRANCE</strong>：將時間的香氣細膩重現於空間之中，柔和瀰漫的氣息為您的生活空間增添一份從容與餘裕。
+                        </p>
+                        <div class="space-y-2 text-xs text-stone-700">
+                            <!-- White Dawn -->
+                            <div class="p-2.5 bg-stone-50 rounded border border-stone-100">
+                                <div class="font-bold text-stone-900 mb-0.5" contenteditable="true">🍑 White Dawn (白桃 ｜ 茉莉 ｜ 白麝香)</div>
+                                <div class="text-[11px] text-stone-600 mb-1" contenteditable="true">
+                                    <em>如清晨的第一縷呼吸般純淨透明的時光，甜美白桃、茉莉與白麝香開啟清朗早晨的香氣。</em>
+                                </div>
+                                <div class="text-[10.5px] text-stone-500 font-mono mb-1" contenteditable="true">
+                                    <strong>NOTES:</strong> White Peach Skin, Black Pepper, Galbanum, Jasmine Sambac, Orris, Ambrette Seed, White Musk
+                                </div>
+                                <div class="text-[11px] text-stone-600 space-y-0.5">
+                                    <div><span class="badge badge-korea text-[9px] mr-1">韓網實測</span> 像走進首爾聖水洞質感選品店，高級無化學感，車用/臥室首選。</div>
+                                    <div><span class="badge badge-taiwan text-[9px] mr-1">台友實測</span> 玄關一進門極度放鬆，朋友來訪狂問牌子。</div>
+                                </div>
+                            </div>
+                            <!-- Midday Garden -->
+                            <div class="p-2.5 bg-stone-50 rounded border border-stone-100">
+                                <div class="font-bold text-stone-900 mb-0.5" contenteditable="true">🌸 Midday Garden (小蒼蘭 ｜ 紫丁香 ｜ 苦橙葉)</div>
+                                <div class="text-[11px] text-stone-600 mb-1" contenteditable="true">
+                                    <em>正午暖陽下花朵靜靜睜開眼互道問候的時光，過雲雨浸潤的紫丁香下，小蒼蘭與玫瑰乘著正午光芒靜謐舒展。</em>
+                                </div>
+                                <div class="text-[10.5px] text-stone-500 font-mono mb-1" contenteditable="true">
+                                    <strong>NOTES:</strong> Water, Freesia, Rose, Lilac, Petitgrain, Musk
+                                </div>
+                                <div class="text-[11px] text-stone-600 space-y-0.5">
+                                    <div><span class="badge badge-korea text-[9px] mr-1">韓網實測</span> 正午花園水汽感，客廳擴香均勻完全不暈香。</div>
+                                    <div><span class="badge badge-taiwan text-[9px] mr-1">台友實測</span> 客廳採光好時散發清新花店感，優雅明亮。</div>
+                                </div>
+                            </div>
+                            <!-- Santal Dusk -->
+                            <div class="p-2.5 bg-stone-50 rounded border border-stone-100">
+                                <div class="font-bold text-stone-900 mb-0.5" contenteditable="true">🪵 Santal Dusk (檀香木 ｜ 鳶尾根 ｜ 琥珀)</div>
+                                <div class="text-[11px] text-stone-600 mb-1" contenteditable="true">
+                                    <em>斜陽在金色沙灘上拉長身影的時光，白晝餘熱沉澱出深邃檀香木與琥珀，濃郁香草填滿黃昏傍晚。</em>
+                                </div>
+                                <div class="text-[10.5px] text-stone-500 font-mono mb-1" contenteditable="true">
+                                    <strong>NOTES:</strong> Sandalwood, Orris, Musk, Vanilla, Benzoin, Amber
+                                </div>
+                                <div class="text-[11px] text-stone-600 space-y-0.5">
+                                    <div><span class="badge badge-korea text-[9px] mr-1">韓網實測</span> 冷氣房揮發穩定維持2-3個月，新居落成高質感送禮首選。</div>
+                                    <div><span class="badge badge-taiwan text-[9px] mr-1">台友實測</span> 書房冥想空間必備，極具知性安撫感。</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="summary-tag text-stone-800" contenteditable="true">💬 <strong>總結</strong>：<strong>「極簡陶瓷擺件美學，10～15坪空間持久散發舒心香氣」</strong></div>
                     </div>
-                    <p class="text-sm text-stone-700 leading-relaxed" contenteditable="true">
-                        <strong>品類包含</strong>：全身潔淨露（WASH）與香氛保濕乳液（LOTION），將純淨香氣融入每日洗沐護膚。
-                    </p>
-                    <div class="pt-1">
-                        <span class="badge badge-official" contenteditable="true">SW19 官方評論區</span>
-                        <p class="text-xs text-stone-600 mt-1" contenteditable="true">洗後肌膚水潤不緊繃，被窩裡散發自然貼膚偽體香，打造無死角的沐浴儀式感。</p>
-                    </div>
-                    <div class="summary-tag text-xs font-semibold text-stone-800" contenteditable="true">
-                        💬 網紅/買家總結：<strong>「沐浴後自帶高級偽體香，被窩裡的純淨放鬆感」</strong>
+
+                    <!-- 空間枕香噴霧 -->
+                    <div class="p-6 bg-white border border-stone-200 rounded-xl space-y-2.5 shadow-sm">
+                        <div class="flex items-center justify-between border-b pb-2">
+                            <h4 class="font-bold text-stone-900 text-lg" contenteditable="true">空間枕香噴霧 (ROOM SPRAY 實測)</h4>
+                            <span class="badge badge-official" contenteditable="true">放鬆睡眠</span>
+                        </div>
+                        <p class="text-xs text-stone-600 italic bg-stone-50 p-2 rounded" contenteditable="true">
+                            <strong>產品說明</strong>：專為寢具與室內空間設計，添加扁柏水與綠茶萃取，安撫神經營造放鬆儀式感。
+                        </p>
+                        <div class="space-y-2 text-xs text-stone-700">
+                            <div class="p-2.5 bg-stone-50 rounded border border-stone-100" contenteditable="true">
+                                <div class="font-bold text-stone-900 mb-0.5">🧼 8am (純白皂香 ｜ 扁柏木)</div>
+                                <div class="text-[11px] text-stone-600 mb-1">晨間喚醒放鬆；像剛洗曬好的純淨被單。</div>
+                                <div><span class="badge badge-taiwan text-[9px] mr-1">台友實測</span> 早晨噴窗簾喚醒一整天，房間空氣瞬間變乾淨。</div>
+                            </div>
+                            <div class="p-2.5 bg-stone-50 rounded border border-stone-100" contenteditable="true">
+                                <div class="font-bold text-stone-900 mb-0.5">🍋 3pm (檸檬紅茶 ｜ 扁柏木)</div>
+                                <div class="text-[11px] text-stone-600 mb-1">客廳下午茶氛圍，掃除室內沉悶。</div>
+                                <div><span class="badge badge-taiwan text-[9px] mr-1">台友實測</span> 出門前噴在大衣圍巾上，持香比噴皮上更久更自然。</div>
+                            </div>
+                            <div class="p-2.5 bg-stone-50 rounded border border-stone-100" contenteditable="true">
+                                <div class="font-bold text-stone-900 mb-0.5">🌙 Midnight (白麝香 ｜ 扁柏木)</div>
+                                <div class="text-[11px] text-stone-600 mb-1">失眠救星被窩體香，天然扁柏水深層放鬆。</div>
+                                <div><span class="badge badge-taiwan text-[9px] mr-1">台友實測</span> 冬天噴棉被安心感滿分超好睡，營造舒眠環境。</div>
+                            </div>
+                        </div>
+                        <div class="summary-tag text-stone-800" contenteditable="true">💬 <strong>總結</strong>：<strong>「天然扁柏水安撫舒緩，織物纖維持香遠勝皮膚，睡前儀式感」</strong></div>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- SLIDE 12: 居家空間香氛 (DIFFUSER & ROOM SPRAY) -->
-        <section class="slide flex-col justify-center px-12 max-w-6xl mx-auto" id="slide-12">
-            <div class="mb-4">
-                <span class="text-sm tracking-widest text-stone-400 uppercase font-mono" contenteditable="true">第十單元 · 居家生活美學</span>
-                <h2 class="font-cinzel text-3xl font-bold text-stone-900" contenteditable="true">HOME (居家空間香氛系列)</h2>
-            </div>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <!-- 擴香 DIFFUSER -->
-                <div class="p-6 bg-white border border-stone-200 rounded-xl space-y-3 shadow-sm">
-                    <div class="flex items-center justify-between border-b pb-2">
-                        <h4 class="font-bold text-stone-900 text-lg" contenteditable="true">擴香組 (DIFFUSER)</h4>
-                        <span class="badge badge-official" contenteditable="true">陶瓷瓶身工藝</span>
-                    </div>
-                    <p class="text-sm text-stone-700 leading-relaxed" contenteditable="true">
-                        <strong>核心香型</strong>：
-                        <br>• <strong>White Dawn</strong>：白桃果皮 ＋ 白麝香 ＋ 茉莉花香。
-                        <br>• <strong>Midday Garden</strong>：清晨水感 ＋ 小蒼蘭 ＋ 玫瑰花香。
-                        <br>• <strong>Santal Dusk</strong>：沉穩檀香木 ＋ 麝香 ＋ 鳶尾根。
-                    </p>
-                    <div class="pt-1">
-                        <span class="badge badge-musinsa" contenteditable="true">Musinsa 買家評價</span>
-                        <p class="text-xs text-stone-600 mt-1" contenteditable="true">溫潤陶瓷外觀極具居家美感，擴香均勻柔和，客廳、玄關與書房的質感首選。</p>
-                    </div>
-                    <div class="summary-tag text-xs font-semibold text-stone-800" contenteditable="true">
-                        💬 網紅/買家總結：<strong>「極簡陶瓷擺件美學，均勻散發自然空間香」</strong>
-                    </div>
+        <!-- SLIDE 12: 產品型態橫向評測對比表 -->
+        <section class="slide" id="slide-12">
+            <div class="slide-inner space-y-4">
+                <div class="text-center">
+                    <span class="text-sm tracking-widest text-stone-400 uppercase font-mono" contenteditable="true">第十單元 · 綜合反饋</span>
+                    <h2 class="font-cinzel text-3xl font-bold text-stone-900" contenteditable="true">消費者反饋整理：產品型態橫向評測對比表</h2>
                 </div>
-                <!-- 枕香與空間噴霧 ROOM & BED SPRAY -->
-                <div class="p-6 bg-white border border-stone-200 rounded-xl space-y-3 shadow-sm">
-                    <div class="flex items-center justify-between border-b pb-2">
-                        <h4 class="font-bold text-stone-900 text-lg" contenteditable="true">枕香與空間噴霧 (ROOM & BED SPRAY)</h4>
-                        <span class="badge badge-official" contenteditable="true">放鬆睡眠儀式</span>
+                <div class="bg-white border border-stone-200 rounded-xl overflow-hidden shadow-sm">
+                    <table class="w-full text-left text-xs">
+                        <thead class="bg-stone-100 border-b border-stone-200 font-semibold text-stone-800">
+                            <tr>
+                                <th class="p-3" contenteditable="true">評測維度</th>
+                                <th class="p-3" contenteditable="true">淡香精 (EDP)</th>
+                                <th class="p-3" contenteditable="true">護手霜 (Hand Cream)</th>
+                                <th class="p-3" contenteditable="true">髮香噴霧 (Hair Mist)</th>
+                                <th class="p-3" contenteditable="true">空間枕香 (Room Spray)</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-stone-100 text-stone-700">
+                            <tr>
+                                <td class="p-3 font-semibold text-stone-900" contenteditable="true">香味還原度</td>
+                                <td class="p-3" contenteditable="true">100%（層次轉折最豐富分明）</td>
+                                <td class="p-3" contenteditable="true">85%～90%（融入柔和乳霜奶香感）</td>
+                                <td class="p-3" contenteditable="true">95%（前調果香草本更清透自然）</td>
+                                <td class="p-3" contenteditable="true">95%（空間包覆感強、擴散均勻）</td>
+                            </tr>
+                            <tr>
+                                <td class="p-3 font-semibold text-stone-900" contenteditable="true">持香時間實測</td>
+                                <td class="p-3" contenteditable="true">3 ～ 5 小時（Midnight 偏貼膚）</td>
+                                <td class="p-3" contenteditable="true">1 ～ 2.5 小時（洗手後需補擦）</td>
+                                <td class="p-3" contenteditable="true">2 ～ 4 小時（噴髮尾衣物可達半天）</td>
+                                <td class="p-3" contenteditable="true">噴於寢具窗簾可留香半天以上</td>
+                            </tr>
+                            <tr>
+                                <td class="p-3 font-semibold text-stone-900" contenteditable="true">質地與使用感</td>
+                                <td class="p-3" contenteditable="true">細緻噴霧，酒精快速揮發</td>
+                                <td class="p-3" contenteditable="true"><strong>水凝乳水感質地</strong>，打鍵盤不沾手</td>
+                                <td class="p-3" contenteditable="true">輕盈水霧，添加大豆水解修護蛋白</td>
+                                <td class="p-3" contenteditable="true">添加扁柏水，無刺激睡眠安心感</td>
+                            </tr>
+                            <tr>
+                                <td class="p-3 font-semibold text-stone-900" contenteditable="true">韓台消費者評價</td>
+                                <td class="p-3" contenteditable="true">外出約會必備、送禮零踩雷</td>
+                                <td class="p-3" contenteditable="true">辦公室人手一支的偽體香補香王</td>
+                                <td class="p-3" contenteditable="true">風吹過髮梢的心機發香神器</td>
+                                <td class="p-3" contenteditable="true">睡前放鬆治癒、打造質感居家</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- SLIDE 13: 附錄一・混香搭配指南 -->
+        <section class="slide" id="slide-13">
+            <div class="slide-inner space-y-5">
+                <div class="text-center">
+                    <span class="text-sm tracking-widest text-stone-400 uppercase font-mono" contenteditable="true">附錄一 · 混香搭配指南</span>
+                    <h2 class="font-cinzel text-3xl font-bold text-stone-900" contenteditable="true">官方調香師推薦疊香組合</h2>
+                </div>
+                <div class="grid grid-cols-2 gap-6">
+                    <div class="p-6 bg-white border border-stone-200 rounded-xl space-y-3 shadow-sm">
+                        <div class="flex items-center justify-between">
+                            <h3 class="font-bold text-stone-900 text-lg" contenteditable="true">👑 官方首推：Noon ＋ Midnight</h3>
+                            <span class="badge badge-korea" contenteditable="true">官方專訪</span>
+                        </div>
+                        <p class="text-sm text-stone-700 leading-relaxed" contenteditable="true">
+                            <strong>調香原理</strong>：兩款由同一位調香大師 Marianne Nawrocki 創作，在研發初期就設定了疊香機制。以 Noon 的明亮水汽鳶尾花提亮 Midnight 的深沉夜色木質，層次最豐富。
+                        </p>
+                        <div class="script-box script-guest">
+                            <strong class="text-blue-800">🗣️ 推薦話術</strong>：<span contenteditable="true">「您可以把 Noon 噴在外側衣物，Midnight 噴在手腕動脈，正午光影與午夜溫柔交織，香氣非常立體迷人。」</span>
+                        </div>
                     </div>
-                    <p class="text-sm text-stone-700 leading-relaxed" contenteditable="true">
-                        <strong>核心特色</strong>：專為寢具、枕頭與室內空間設計，融入天然扁柏水（Chamaecyparis obtusa water）與綠茶萃取物，營造安穩舒適氛圍。
-                    </p>
-                    <div class="pt-1">
-                        <span class="badge badge-naver" contenteditable="true">Naver 部落格好評</span>
-                        <p class="text-xs text-stone-600 mt-1" contenteditable="true">睡前噴在枕頭或窗簾上留香極佳，帶來被森林與純淨白麝香包覆的治癒放鬆感。</p>
-                    </div>
-                    <div class="summary-tag text-xs font-semibold text-stone-800" contenteditable="true">
-                        💬 網紅/買家總結：<strong>「扁柏木睡眠治癒感，織物持香遠勝皮膚」</strong>
+                    <div class="p-6 bg-white border border-stone-200 rounded-xl space-y-3 shadow-sm">
+                        <div class="flex items-center justify-between">
+                            <h3 class="font-bold text-stone-900 text-lg" contenteditable="true">🌿 晨露花園：6am ＋ 3pm</h3>
+                            <span class="badge badge-korea" contenteditable="true">官方推薦</span>
+                        </div>
+                        <p class="text-sm text-stone-700 leading-relaxed" contenteditable="true">
+                            <strong>調香原理</strong>：6am 的冷冽綠意草本中和了 3pm 的果酸甜感，營造出宛如在露水未乾的庭院花園中享用下午茶的自然高級感。
+                        </p>
+                        <div class="script-box script-guest">
+                            <strong class="text-blue-800">🗣️ 推薦話術</strong>：<span contenteditable="true">「如果覺得 3pm 偏甜、6am 偏冷，將兩者疊擦能交織出晨光灑落花園的清透茶香，非常特別。」</span>
+                        </div>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- SLIDE 13: 混香指南與使用技巧 (含 Narciso Pure Musc 深度解析) -->
-        <section class="slide flex-col justify-center px-12 max-w-6xl mx-auto" id="slide-13">
-            <div class="mb-4">
-                <span class="text-sm tracking-widest text-stone-400 uppercase font-mono" contenteditable="true">第十一單元 · 混香搭配指南</span>
-                <h2 class="font-cinzel text-3xl font-bold text-stone-900" contenteditable="true">官方調香師推薦與網紅混香公式</h2>
-            </div>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <!-- 官方首推 -->
-                <div class="p-5 bg-white border border-stone-200 rounded-xl space-y-2 shadow-sm">
-                    <div class="flex items-center justify-between">
-                        <h3 class="font-bold text-stone-900 text-base" contenteditable="true">👑 官方首推：Noon ＋ Midnight</h3>
-                        <span class="badge badge-musinsa" contenteditable="true">官方專訪</span>
-                    </div>
-                    <p class="text-xs text-stone-700 leading-relaxed" contenteditable="true"><strong>調香原理</strong>：兩款由同一位調香師 Marianne 創作，在研發初期就設定了疊香機制。以 Noon 的明亮水汽鳶尾花提亮 Midnight 的深沉夜色木質，層次最豐富。</p>
+        <!-- SLIDE 14: 附錄二・網紅混香技巧 -->
+        <section class="slide" id="slide-14">
+            <div class="slide-inner space-y-5">
+                <div class="text-center">
+                    <span class="text-sm tracking-widest text-stone-400 uppercase font-mono" contenteditable="true">附錄二 · 混香實戰技巧</span>
+                    <h2 class="font-cinzel text-3xl font-bold text-stone-900" contenteditable="true">網紅混香技巧 ＆ 持久偽體香打底神器</h2>
                 </div>
-                <!-- 晨露花園 -->
-                <div class="p-5 bg-white border border-stone-200 rounded-xl space-y-2 shadow-sm">
-                    <div class="flex items-center justify-between">
-                        <h3 class="font-bold text-stone-900 text-base" contenteditable="true">🌿 晨露花園：6am ＋ 3pm</h3>
-                        <span class="badge badge-musinsa" contenteditable="true">官方推薦</span>
+                <div class="grid grid-cols-2 gap-6">
+                    <div class="p-6 bg-white border border-stone-200 rounded-xl space-y-3 shadow-sm">
+                        <div class="flex items-center justify-between">
+                            <h3 class="font-bold text-stone-900 text-lg" contenteditable="true">✨ 體香打底神器：Narciso Pure Musc</h3>
+                            <span class="badge badge-korea" contenteditable="true">網紅推薦</span>
+                        </div>
+                        <p class="text-xs text-stone-700 leading-relaxed" contenteditable="true">
+                            <strong>名詞解析</strong>：<em>Narciso Rodriguez Pure Musc（純粹繆思）</em> 是香水界的經典純白麝香代表作，主打極致純淨的白花與喀什米爾木，被香氛界公認為<strong>「混香打底天花板」</strong>。
+                        </p>
+                        <p class="text-xs text-stone-600 leading-relaxed" contenteditable="true">
+                            <strong>疊香技巧</strong>：先以 Pure Musc 打底抓香，外層覆蓋噴上 SW19 Midnight，完美改善留香短問題，交織出乾淨溫暖的極致偽體香。
+                        </p>
                     </div>
-                    <p class="text-xs text-stone-700 leading-relaxed" contenteditable="true"><strong>調香原理</strong>：6am 的冷冽綠意草本中和了 3pm 的果酸甜感，營造出露水未乾花園中享用下午茶的自然高級感。</p>
-                </div>
-                <!-- 網紅體香持久術 (Narciso Pure Musc) -->
-                <div class="p-5 bg-white border border-stone-200 rounded-xl space-y-2 shadow-sm">
-                    <div class="flex items-center justify-between">
-                        <h3 class="font-bold text-stone-900 text-base" contenteditable="true">✨ 體香打底神器：Narciso Pure Musc</h3>
-                        <span class="badge badge-glowpick" contenteditable="true">網紅 推薦</span>
+                    <div class="p-6 bg-white border border-stone-200 rounded-xl space-y-3 shadow-sm">
+                        <div class="flex items-center justify-between">
+                            <h3 class="font-bold text-stone-900 text-lg" contenteditable="true">🧴 護手霜鎖香持香法 (現場必教)</h3>
+                            <span class="badge badge-taiwan" contenteditable="true">台友實測技巧</span>
+                        </div>
+                        <p class="text-xs text-stone-700 leading-relaxed" contenteditable="true">
+                            <strong>操作步驟</strong>：
+                            <br>1. 先塗抹同款護手霜（如 3pm / Midnight）於手腕脈搏處。
+                            <br>2. 護手霜的保濕油脂基底能緊緊抓住香精油分子。
+                            <br>3. 隨後噴上同款香水，持香時間能直接從 3 小時拉長至 5～6 小時以上。
+                        </p>
                     </div>
-                    <p class="text-xs text-stone-700 leading-relaxed" contenteditable="true">
-                        <strong>名詞解析</strong>：<em>Narciso Rodriguez Pure Musc（純粹繆思）</em> 是美國設計師品牌的經典白麝香香水，主打純淨白花與喀什米爾木，被香氛界公認為<strong>「混香打底天花板」</strong>。
-                    </p>
-                    <p class="text-xs text-stone-600 leading-relaxed" contenteditable="true">
-                        <strong>疊香技巧</strong>：先以 Pure Musc 打底抓香，外層覆蓋噴上 SW19 Midnight，完美改善留香短問題，交織出乾淨溫暖的極致偽體香。
-                    </p>
-                </div>
-                <!-- 鎖香技巧 -->
-                <div class="p-5 bg-white border border-stone-200 rounded-xl space-y-2 shadow-sm">
-                    <div class="flex items-center justify-between">
-                        <h3 class="font-bold text-stone-900 text-base" contenteditable="true">🧴 鎖香技巧：同款護手霜 ＋ 香水</h3>
-                        <span class="badge badge-naver" contenteditable="true">實測技巧</span>
-                    </div>
-                    <p class="text-xs text-stone-700 leading-relaxed" contenteditable="true"><strong>調香原理</strong>：先以同款護手霜塗抹手腕鎖住香精油分子，再噴上香水，持香時間能直接從 3 小時拉長至 5～6 小時以上。</p>
                 </div>
             </div>
         </section>
 
-        <!-- SLIDE 14: 產品形態橫向對比表 -->
-        <section class="slide flex-col justify-center px-12 max-w-6xl mx-auto" id="slide-14">
-            <div class="mb-4">
-                <span class="text-sm tracking-widest text-stone-400 uppercase font-mono" contenteditable="true">第十二單元 · 產品形態對比</span>
-                <h2 class="font-cinzel text-3xl font-bold text-stone-900" contenteditable="true">產品型態橫向評測對比表</h2>
-            </div>
-            <div class="bg-white border border-stone-200 rounded-xl overflow-hidden shadow-sm">
-                <table class="w-full text-left text-sm">
-                    <thead class="bg-stone-100 border-b border-stone-200 font-semibold text-stone-800">
-                        <tr>
-                            <th class="p-4" contenteditable="true">比較項目</th>
-                            <th class="p-4" contenteditable="true">淡香精系列</th>
-                            <th class="p-4" contenteditable="true">手部與身體護理</th>
-                            <th class="p-4" contenteditable="true">居家空間香氛</th>
-                        </tr>
-                    </thead>
-                    <tbody class="divide-y divide-stone-100 text-stone-700">
-                        <tr>
-                            <td class="p-4 font-semibold text-stone-900" contenteditable="true">香味還原度</td>
-                            <td class="p-4" contenteditable="true">100%（層次轉折最分明）</td>
-                            <td class="p-4" contenteditable="true">85%～90%（多了一層柔和奶霜感）</td>
-                            <td class="p-4" contenteditable="true">95%（擴香均勻，空間包覆感強）</td>
-                        </tr>
-                        <tr>
-                            <td class="p-4 font-semibold text-stone-900" contenteditable="true">持香時間</td>
-                            <td class="p-4" contenteditable="true">3 ～ 5 小時（午夜款偏貼膚）</td>
-                            <td class="p-4" contenteditable="true">1 ～ 2.5 小時（洗手需補擦）</td>
-                            <td class="p-4" contenteditable="true">空間持續擴香，織物上留香半天以上</td>
-                        </tr>
-                        <tr>
-                            <td class="p-4 font-semibold text-stone-900" contenteditable="true">質地與功能</td>
-                            <td class="p-4" contenteditable="true">細緻噴霧，酒精揮發快</td>
-                            <td class="p-4" contenteditable="true"><strong>水凝乳水感質地</strong>，清爽完全不黏手</td>
-                            <td class="p-4" contenteditable="true">擴香與放鬆扁柏水空間噴霧</td>
-                        </tr>
-                        <tr>
-                            <td class="p-4 font-semibold text-stone-900" contenteditable="true">推薦場景</td>
-                            <td class="p-4" contenteditable="true">出門約會、重要社交場合</td>
-                            <td class="p-4" contenteditable="true">辦公室日常、洗手後隨身補香</td>
-                            <td class="p-4" contenteditable="true">客廳迎賓、書房靜心、睡前放鬆儀式</td>
-                        </tr>
-                    </tbody>
-                </table>
+        <!-- SLIDE 15: 附錄三・PIF 登錄商品清單 -->
+        <section class="slide" id="slide-15">
+            <div class="slide-inner space-y-4">
+                <div class="text-center">
+                    <span class="text-sm tracking-widest text-stone-400 uppercase font-mono" contenteditable="true">附錄三 · 合規清單</span>
+                    <h2 class="font-cinzel text-3xl font-bold text-stone-900" contenteditable="true">PIF 登錄核准商品總覽</h2>
+                </div>
+                <div class="bg-white border border-stone-200 rounded-xl overflow-hidden shadow-sm">
+                    <table class="w-full text-left text-sm">
+                        <thead class="bg-amber-50 border-b border-amber-200 font-semibold text-amber-900">
+                            <tr>
+                                <th class="p-3" contenteditable="true">產品品類</th>
+                                <th class="p-3" contenteditable="true">已完成 PIF 登錄核准香味</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-stone-100 text-stone-700 text-xs">
+                            <tr>
+                                <td class="p-3 font-bold text-stone-900" contenteditable="true">淡香精 (EAU DE PARFUM)</td>
+                                <td class="p-3" contenteditable="true"><span class="badge badge-pif font-mono">8am, 3pm, 5pm, Midnight</span></td>
+                            </tr>
+                            <tr>
+                                <td class="p-3 font-bold text-stone-900" contenteditable="true">香精 (EXTRAIT DE PARFUM)</td>
+                                <td class="p-3" contenteditable="true"><span class="badge badge-pif font-mono">Seoul 6am, Seoul Midnight</span></td>
+                            </tr>
+                            <tr>
+                                <td class="p-3 font-bold text-stone-900" contenteditable="true">護手霜 (HAND CREAM)</td>
+                                <td class="p-3" contenteditable="true"><span class="badge badge-pif font-mono">Midnight, 5pm</span></td>
+                            </tr>
+                            <tr>
+                                <td class="p-3 font-bold text-stone-900" contenteditable="true">全身潔淨露 (Body WASH)</td>
+                                <td class="p-3" contenteditable="true"><span class="badge badge-pif font-mono">3pm, Midnight</span></td>
+                            </tr>
+                            <tr>
+                                <td class="p-3 font-bold text-stone-900" contenteditable="true">香氛保濕乳液 (Body LOTION)</td>
+                                <td class="p-3" contenteditable="true"><span class="badge badge-pif font-mono">3pm, Midnight</span></td>
+                            </tr>
+                            <tr>
+                                <td class="p-3 font-bold text-stone-900" contenteditable="true">髮香噴霧 (HAIR PARFUM MIST)</td>
+                                <td class="p-3" contenteditable="true"><span class="badge badge-pif font-mono">3pm, Midnight</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </section>
 
-        <!-- SLIDE 15: 結語 -->
-        <section class="slide flex-col justify-center items-center px-12 text-center" id="slide-15">
-            <div class="max-w-3xl space-y-6">
+        <!-- SLIDE 16: 結語 -->
+        <section class="slide text-center" id="slide-16">
+            <div class="slide-inner items-center space-y-6">
                 <span class="text-xs tracking-widest text-stone-400 uppercase font-mono" contenteditable="true">結語總結</span>
                 <h2 class="font-cinzel text-4xl text-stone-900 font-bold" contenteditable="true">
                     「時間與空間的氣味美學」
                 </h2>
                 <p class="text-base text-stone-600 font-light leading-relaxed max-w-xl mx-auto" contenteditable="true">
-                    SW19 透過頂級國際調香大師將時間感轉化為嗅覺記憶，結合極致的產品配方與水感護膚質地，為每一位顧客創造無可取代的日常氛圍體驗。
+                    SW19 透過頂級國際調香大師將時間感轉化為嗅覺記憶，結合極致的產品配方與水感護膚質地，為每一位貴賓與媒體創造無可取代的日常氛圍體驗。
                 </p>
                 <div class="pt-4 flex justify-center gap-4">
                     <button onclick="goToSlide(0)" class="px-6 py-2.5 bg-stone-900 text-white text-sm font-semibold rounded-full hover:bg-stone-800 transition">
@@ -822,19 +1021,17 @@
             提示：可使用鍵盤 ← → 切換投影片，所有頁面文字均可直接點擊編輯
         </div>
         <div class="flex items-center space-x-3">
-            <button onclick="prevSlide()" class="p-2 rounded-full border border-stone-300 hover:bg-stone-200 transition text-stone-700">
-                <i data-lucide="chevron-left" class="w-4 h-4"></i>
+            <button onclick="prevSlide()" class="px-4 py-1.5 rounded border border-stone-300 hover:bg-stone-200 transition text-stone-700 text-xs font-semibold">
+                上一頁
             </button>
-            <button onclick="nextSlide()" class="p-2 rounded-full border border-stone-300 hover:bg-stone-200 transition text-stone-700">
-                <i data-lucide="chevron-right" class="w-4 h-4"></i>
+            <button onclick="nextSlide()" class="px-4 py-1.5 rounded border border-stone-300 hover:bg-stone-200 transition text-stone-700 text-xs font-semibold">
+                下一頁
             </button>
         </div>
     </footer>
 
     <!-- 輪播邏輯 Script -->
     <script>
-        lucide.createIcons();
-
         let currentSlide = 0;
         const slides = document.querySelectorAll('.slide');
         const totalSlides = slides.length;
@@ -842,7 +1039,11 @@
 
         function updateSlide() {
             slides.forEach((slide, idx) => {
-                slide.classList.toggle('active', idx === currentSlide);
+                if (idx === currentSlide) {
+                    slide.classList.add('active');
+                } else {
+                    slide.classList.remove('active');
+                }
             });
             indicator.innerText = `${String(currentSlide + 1).padStart(2, '0')} / ${String(totalSlides).padStart(2, '0')}`;
         }
@@ -887,3 +1088,4 @@
     </script>
 </body>
 </html>
+  
